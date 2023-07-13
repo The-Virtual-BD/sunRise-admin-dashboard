@@ -1,9 +1,14 @@
 import React from "react";
+import { useCollection } from "../../actions/reducers";
 
 const Brands = () => {
+	const{isViewBrand}=useCollection();
 	return (
 		<div>
-			<AddBrand />
+			{
+				isViewBrand? <AddBrand />: <ViewBrand />
+			}
+			
 		</div>
 	);
 };
@@ -47,10 +52,10 @@ const AddBrand=()=>{
 	)
 };
 
-/* const ViewBrand=()=>{
+const ViewBrand=()=>{
 	return(
 		<div>
-
+			ViewBrand
 		</div>
 	)
-} */
+}

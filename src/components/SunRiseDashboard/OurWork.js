@@ -1,9 +1,13 @@
 import React from "react";
+import { useCollection } from "../../actions/reducers";
+import SunEditor from "suneditor-react";
 
 const OurWork = () => {
+	const { isViewWork } = useCollection();
+
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
-			<AddWork />
+			{isViewWork ? <AddWork /> : <ViewWork />}
 		</div>
 	);
 };
@@ -18,24 +22,44 @@ const AddWork = () => {
 					<h3 className="px-3 text-2xl font-bold text-center">Add Work</h3>
 
 					<form className="p-3 flex flex-col items-center justify-center mt-10 gap-4 w-full">
+						<div className="flex flex-col lg:flex-row items-center gap-3 w-full">
+							<div className="form-control w-full  ">
+								<input
+									type="text"
+									placeholder="Name"
+									className="input  w-full  bg-bgclr"
+								/>
+							</div>
 
-						<div className="form-control w-full  ">
-							<input
-								type="text"
-								placeholder="Name"
-								className="input  w-full  bg-bgclr"
-							/>
+							<div className="form-control w-full  ">
+								<input
+									type="text"
+									placeholder="Category"
+									className="input  w-full  bg-bgclr"
+								/>
+							</div>
 						</div>
 
 						<div className="form-control w-full  ">
 							<input type="file" className="file-input  w-full bg-bgclr" />
 						</div>
 
-						<div className="form-control w-full ">
+						{/* <div className="form-control w-full ">
 							<textarea
 								className="textarea  w-full  bg-bgclr"
 								placeholder="Descriptions"
 							></textarea>
+						</div> */}
+
+						<div className="w-full">
+							<SunEditor
+								lang="en"
+								width="100%"
+								height="100%"
+								placeholder="Enter Description..."
+								autoFocus={true}
+								setDefaultStyle="font-family: 'Open Sans', sans-serif; font-size: 14px; text-align:start; min-height:200px; background:#ECF0F1"
+							/>
 						</div>
 
 						<button
@@ -49,4 +73,8 @@ const AddWork = () => {
 			</div>
 		</div>
 	);
+};
+
+const ViewWork = () => {
+	return <div>View Work</div>;
 };

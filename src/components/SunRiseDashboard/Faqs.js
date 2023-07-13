@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useCollection } from "../../actions/reducers";
 
 const Faqs = () => {
+	const{isViewFaqs}=useCollection();
 	return (
 		<div>
-			<AddFaq />
-			{/* <ViewFaqs /> */}
+			{
+				isViewFaqs? <AddFaq />: <ViewFaqs /> 
+			}
+			
 		</div>
 	);
 };

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineLogout, AiOutlineMenu } from 'react-icons/ai';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { APPContext } from '../../actions/reducers';
+import { APPContext, useCollection } from '../../actions/reducers';
 import { sidebarMenu } from '../../AllData/staticData';
 import useToken from '../utilities/useToken';
 import useUser from '../utilities/useUser';
@@ -13,7 +13,25 @@ import logo2 from '../../images/logo.png'
 
 
 const Header = () => {
-    const { isproject, setIsproject, menuOpen, setMenuOpen, isAddPermission, setIsAddPermission, isAddService, setIsAddService, addNotice, setAddNotice, user, setUser, addCategory, setAddCategory,addRole, setAddRole,addNewsLetter, setAddNewsLetter,addEmailSubs, setAddEmailSubs,addCareer, setAddCareer } = useContext(APPContext);
+ 
+
+
+    const {menuOpen,
+		setMenuOpen,
+		user,
+		setUser,
+		isViewWork,
+		setIsViewWork,
+		isViewProducts,
+		setIsViewProducts,
+		isViewBrand,
+		setIsViewBrand,
+		isViewFaqs,
+		setIsViewFaqs,
+		isViewBlogs,
+		setIsViewBlogs,}=useCollection();
+
+
 
     const [token, setToken] = useToken();
     const location = useLocation();
@@ -83,132 +101,79 @@ const Header = () => {
                     </div>
 
                     <div>
-                        {/* Projects Sub Menu */}
+                        {/* Work Sub Menu */}
                         {
-                            currentPath === "/admin-dashboard/project" && <div className='lg:flex items-center gap-4 justify-center hidden'>
+                            currentPath === "/admin-dashboard/our-work" && <div className='lg:flex items-center gap-4 justify-center hidden'>
                                 <button
-                                    onClick={() => setIsproject(false)}
-                                    className={`${(!isproject) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Projects</button>
+                                    onClick={() => setIsViewWork(false)}
+                                    className={`${(!isViewWork) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Work</button>
 
                                 <button
-                                    onClick={() => setIsproject(true)}
-                                    className={`${isproject ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Project</button>
+                                    onClick={() => setIsViewWork(true)}
+                                    className={`${isViewWork ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Work</button>
 
                             </div>
                         }
 
-                        {/* Permissions Sub Menu */}
+                        {/*Product Sub Menu */}
                         {
-                            currentPath === "/admin-dashboard/permission" && <div className='lg:flex items-center gap-4 justify-center hidden'>
+                            currentPath === "/admin-dashboard/products" && <div className='lg:flex items-center gap-4 justify-center hidden'>
                                 <button
-                                    onClick={() => setIsAddPermission(false)}
-                                    className={`${(!isAddPermission) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>All Permissions</button>
+                                    onClick={() => setIsViewProducts(false)}
+                                    className={`${(!isViewProducts) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Products</button>
 
                                 <button
-                                    onClick={() => setIsAddPermission(true)}
-                                    className={`${isAddPermission ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Permission</button>
+                                    onClick={() => setIsViewProducts(true)}
+                                    className={`${isViewProducts ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Product</button>
 
                             </div>
                         }
 
-
-                        {/* Services Sub Menu */}
+                        {/*Brand Sub Menu */}
                         {
-                            currentPath === "/admin-dashboard/services" && <div className='lg:flex items-center gap-4 justify-center hidden'>
+                            currentPath === "/admin-dashboard/brand" && <div className='lg:flex items-center gap-4 justify-center hidden'>
                                 <button
-                                    onClick={() => setIsAddService(false)}
-                                    className={`${(!isAddService) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Services</button>
-
-                                <button
-                                    onClick={() => setIsAddService(true)}
-                                    className={`${isAddService ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Service</button>
-
-                            </div>
-                        }
-
-                        {/* Notices Sub Menu */}
-                        {
-                            currentPath === "/admin-dashboard/notice" && <div className='lg:flex items-center gap-4 justify-center hidden'>
-                                <button
-                                    onClick={() => setAddNotice(false)}
-                                    className={`${(!addNotice) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Notice</button>
+                                    onClick={() => setIsViewBrand(false)}
+                                    className={`${(!isViewBrand) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Brand</button>
 
                                 <button
-                                    onClick={() => setAddNotice(true)}
-                                    className={`${addNotice ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Notice</button>
-
-                            </div>
-                        }
-
-                        {/* Category Sub Menu */}
-                        {
-                            currentPath === "/admin-dashboard/category" && <div className='lg:flex items-center gap-4 justify-center hidden'>
-                                <button
-                                    onClick={() => setAddCategory(false)}
-                                    className={`${(!addCategory) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Category</button>
-
-                                <button
-                                    onClick={() => setAddCategory(true)}
-                                    className={`${addCategory ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Category</button>
+                                    onClick={() => setIsViewBrand(true)}
+                                    className={`${isViewBrand ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Brand</button>
 
                             </div>
                         }
 
 
-                        {/* Role Sub Menu */}
+                        {/*news Sub Menu */}
                         {
-                            currentPath === "/admin-dashboard/role" && <div className='lg:flex items-center gap-4 justify-center hidden'>
+                            currentPath === "/admin-dashboard/news" && <div className='lg:flex items-center gap-4 justify-center hidden'>
                                 <button
-                                    onClick={() => setAddRole(false)}
-                                    className={`${(!addRole) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Role</button>
+                                    onClick={() => setIsViewBlogs(false)}
+                                    className={`${(!isViewBlogs) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View News</button>
 
                                 <button
-                                    onClick={() => setAddRole(true)}
-                                    className={`${addRole ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Role</button>
+                                    onClick={() => setIsViewBlogs(true)}
+                                    className={`${isViewBlogs ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add News</button>
 
                             </div>
                         }
 
-                        {/*NewsLetter Sub Menu */}
+
+                        {/*faqs Sub Menu */}
                         {
-                            currentPath === "/admin-dashboard/newsletter" && <div className='lg:flex items-center gap-4 justify-center hidden'>
+                            currentPath === "/admin-dashboard/faqs" && <div className='lg:flex items-center gap-4 justify-center hidden'>
                                 <button
-                                    onClick={() => setAddNewsLetter(false)}
-                                    className={`${(!addNewsLetter) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Newsletter</button>
+                                    onClick={() => setIsViewFaqs(false)}
+                                    className={`${(!isViewFaqs) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View FAQs</button>
 
                                 <button
-                                    onClick={() => setAddNewsLetter(true)}
-                                    className={`${addNewsLetter ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Newsletter</button>
-
-                            </div>
-                        }
-                        {/*Email Subs Sub Menu */}
-                        {
-                            currentPath === "/admin-dashboard/email-subscription" && <div className='lg:flex items-center gap-4 justify-center hidden'>
-                                <button
-                                    onClick={() => setAddEmailSubs(false)}
-                                    className={`${(!addEmailSubs) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Email Subs</button>
-
-                                <button
-                                    onClick={() => setAddEmailSubs(true)}
-                                    className={`${addEmailSubs ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Email Subs</button>
-
-                            </div>
-                        }
-                        {/*Carieer Sub Menu */}
-                        {
-                            currentPath === "/admin-dashboard/carieer" && <div className='lg:flex items-center gap-4 justify-center hidden'>
-                                <button
-                                    onClick={() => setAddCareer(false)}
-                                    className={`${(!addCareer) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Career</button>
-
-                                <button
-                                    onClick={() => setAddCareer(true)}
-                                    className={`${addCareer ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Career</button>
+                                    onClick={() => setIsViewFaqs(true)}
+                                    className={`${isViewFaqs ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add FAQs</button>
 
                             </div>
                         }
 
+                       
 
 
                     </div>
@@ -280,147 +245,111 @@ const Header = () => {
                             </div>
 
 
-                            {/* Projects Sub Menu */}
+                            {/* Work Sub Menu */}
                             {
-                                currentPath === "/admin-dashboard/project" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
+                                currentPath === "/admin-dashboard/our-work" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
                                     <button
                                         onClick={() => {
-                                            setIsproject(false)
+                                            setIsViewWork(false)
                                             setOpen(!open)
                                         }}
-                                        className={`${(!isproject) ? "text-blue bg-white" : ""} text-sm text-start w-full px-5 py-2  font-semibold hover:text-blue hover:bg-white`}>* View Projects</button>
+                                        className={`${(!isViewWork) ? "text-blue bg-white" : ""} text-sm text-start w-full px-5 py-2  font-semibold hover:text-blue hover:bg-white`}>* View Work</button>
 
                                     <button
                                         onClick={() => {
-                                            setIsproject(true)
+                                            setIsViewWork(true)
                                             setOpen(!open)
                                         }}
-                                        className={`${isproject ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Project</button>
+                                        className={`${isViewWork ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Work</button>
+
+                                </div>
+                            }
+
+                            {/* Product Sub Menu */}
+                            {
+                                currentPath === "/admin-dashboard/products" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
+                                    <button
+                                        onClick={() => {
+                                            setIsViewProducts(false)
+                                            setOpen(!open)
+                                        }}
+                                        className={`${(!isViewProducts) ? "text-blue bg-white" : ""} text-sm text-start w-full px-5 py-2  font-semibold hover:text-blue hover:bg-white`}>* View Work</button>
+
+                                    <button
+                                        onClick={() => {
+                                            setIsViewProducts(true)
+                                            setOpen(!open)
+                                        }}
+                                        className={`${isViewProducts ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Work</button>
 
                                 </div>
                             }
 
 
-                            {/* Permissions Sub Menu */}
+                            {/* Brand Sub Menu */}
                             {
-                                currentPath === "/admin-dashboard/permission" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
+                                currentPath === "/admin-dashboard/brand" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
                                     <button
                                         onClick={() => {
-                                            setIsAddPermission(false)
+                                            setIsViewBrand(false)
                                             setOpen(!open)
                                         }}
-                                        className={`${!isAddPermission ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* View Permissions</button>
+                                        className={`${(!isViewBrand) ? "text-blue bg-white" : ""} text-sm text-start w-full px-5 py-2  font-semibold hover:text-blue hover:bg-white`}>* View Brand</button>
 
                                     <button
                                         onClick={() => {
-                                            setIsAddPermission(true)
+                                            setIsViewBrand(true)
                                             setOpen(!open)
                                         }}
-                                        className={`${isAddPermission ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add New Permission</button>
+                                        className={`${isViewBrand ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Brand</button>
 
                                 </div>
                             }
 
 
-                            {/* Services Sub Menu */}
+                            {/* News Sub Menu */}
                             {
-                                currentPath === "/admin-dashboard/services" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
+                                currentPath === "/admin-dashboard/news" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
                                     <button
                                         onClick={() => {
-                                            setIsAddService(false)
+                                            setIsViewBlogs(false)
                                             setOpen(!open)
                                         }}
-                                        className={`${!isAddService ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* View Services</button>
+                                        className={`${(!isViewBlogs) ? "text-blue bg-white" : ""} text-sm text-start w-full px-5 py-2  font-semibold hover:text-blue hover:bg-white`}>* View News</button>
 
                                     <button
                                         onClick={() => {
-                                            setIsAddService(true)
+                                            setIsViewBlogs(true)
                                             setOpen(!open)
                                         }}
-                                        className={`${isAddService ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Service</button>
+                                        className={`${isViewBlogs ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add News</button>
 
                                 </div>
                             }
 
-                            {/* Notices Sub Menu */}
+
+                            {/* Faqs Sub Menu */}
                             {
-                                currentPath === "/admin-dashboard/notice" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
+                                currentPath === "/admin-dashboard/faqs" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
                                     <button
                                         onClick={() => {
-                                            setAddNotice(false)
+                                            setIsViewFaqs(false)
                                             setOpen(!open)
                                         }}
-                                        className={`${!addNotice ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* View Notices</button>
+                                        className={`${(!isViewFaqs) ? "text-blue bg-white" : ""} text-sm text-start w-full px-5 py-2  font-semibold hover:text-blue hover:bg-white`}>* View FAQs</button>
 
                                     <button
                                         onClick={() => {
-                                            setAddNotice(true)
+                                            setIsViewFaqs(true)
                                             setOpen(!open)
                                         }}
-                                        className={`${addNotice ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Service</button>
-
-                                </div>
-                            }
-                            {/* Category Sub Menu */}
-                            {
-                                currentPath === "/admin-dashboard/notice" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
-                                    <button
-                                        onClick={() => {
-                                            setAddCategory(false)
-                                            setOpen(!open)
-                                        }}
-                                        className={`${!addCategory ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* View Category</button>
-
-                                    <button
-                                        onClick={() => {
-                                            setAddCategory(true)
-                                            setOpen(!open)
-                                        }}
-                                        className={`${addCategory ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Category</button>
+                                        className={`${isViewFaqs ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add FAQs</button>
 
                                 </div>
                             }
 
-                            {/* Role Sub Menu */}
-                            {
-                                currentPath === "/admin-dashboard/role" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
-                                    <button
-                                        onClick={() => {
-                                            setAddRole(false)
-                                            setOpen(!open)
-                                        }}
-                                        className={`${!addRole ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* View Role</button>
 
-                                    <button
-                                        onClick={() => {
-                                            setAddRole(true)
-                                            setOpen(!open)
-                                        }}
-                                        className={`${addRole ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Role</button>
-
-                                </div>
-                            }
-
-                            {/* Newsletter Sub Menu */}
-                            {
-                                currentPath === "/admin-dashboard/newsletter" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
-                                    <button
-                                        onClick={() => {
-                                            setAddNewsLetter(false)
-                                            setOpen(!open)
-                                        }}
-                                        className={`${!addNewsLetter ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* View Newsletter</button>
-
-                                    <button
-                                        onClick={() => {
-                                            setAddNewsLetter(true)
-                                            setOpen(!open)
-                                        }}
-                                        className={`${addNewsLetter ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Newsletter</button>
-
-                                </div>
-                            }
-
+                      
 
 
 

@@ -1,24 +1,75 @@
-import { createContext } from "react";
-import { VIEW_ALL_USER_REQUEST, VIEW_ALL_USER_SUCCESS } from "./actionType";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const APPContext = createContext();
 
-export const initialState = {
-    allUsers: [],
-    isLoading: false,
+const CollectionContext = ({ children }) => {
+	const [isViewWork, setIsViewWork] = useState(false);
+	const [isViewProducts, setIsViewProducts] = useState(false);
+	const [isViewBrand, setIsViewBrand] = useState(false);
+	const [isViewFaqs, setIsViewFaqs] = useState(false);
+	const [isViewBlogs, setIsViewBlogs] = useState(false);
+	const [menuOpen, setMenuOpen] = useState(true);
+	const [user, setUser] = useState([]);
+
+	const value = {
+		menuOpen,
+		setMenuOpen,
+		user,
+		setUser,
+		isViewWork,
+		setIsViewWork,
+		isViewProducts,
+		setIsViewProducts,
+		isViewBrand,
+		setIsViewBrand,
+		isViewFaqs,
+		setIsViewFaqs,
+		isViewBlogs,
+		setIsViewBlogs,
+	};
+
+	useEffect(() => {
+		const getUserStr = localStorage.getItem("user");
+		if (getUserStr) {
+			const getUser = JSON.parse(getUserStr);
+			//    console.log(getUser);
+			setUser(getUser);
+		}
+	}, []);
+
+	return <APPContext.Provider value={value}>{children}</APPContext.Provider>;
 };
 
-/* export const reducer = (state=initialState, action) => {
-        switch (action) {
-            case VIEW_ALL_USER_REQUEST:
-                return (
-                    ...state,
-                    isLoading: true
-                )
-            case VIEW_ALL_USER_SUCCESS:
-                return()
-        
-            default:
-                return state;
-        }
-} */
+//Create Hooks for send data
+export const useCollection = () => {
+	const context = useContext(APPContext);
+	return context;
+};
+
+export default CollectionContext;
+
+/* const [user] = useAuthState(auth);
+	const token = window.localStorage.getItem("token");
+
+	//Fetch Collections
+	const fetchCollections = async () => {
+		const res = await fetch(`${baseUrl}/collections`);
+		const data = await res.json();
+		return data?.data;
+	};
+
+	//Fetch Products
+	const fetchProducts = async () => {
+		const res = await fetch(`${baseUrl}/sales`);
+		const data = await res.json();
+		return data?.data;
+	};
+
+	const { data: collection, isLoading: loading } = useQuery(
+		"collections",
+		fetchCollections
+	);
+	const { data: products, isLoading: loadingProducts } = useQuery(
+		"products",
+		fetchProducts
+	); */

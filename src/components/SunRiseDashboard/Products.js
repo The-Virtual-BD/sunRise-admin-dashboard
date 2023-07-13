@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import { useCollection } from "../../actions/reducers";
 
 const Products = () => {
+	const{isViewProducts}=useCollection();
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
-			<AddProduct />
+			{
+				isViewProducts?<AddProduct />:<ViewProducts />
+			}
+			
 		</div>
 	);
 };
@@ -59,3 +64,12 @@ const AddProduct = () => {
 		</div>
 	);
 };
+
+
+const ViewProducts=()=>{
+	return(
+		<div>
+			View Products
+		</div>
+	)
+}
