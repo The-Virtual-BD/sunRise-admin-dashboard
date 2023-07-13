@@ -1,94 +1,90 @@
-import React, { useEffect, useState } from 'react';
-import Button from '../utilities/Button';
+import React, { useEffect, useState } from "react";
 
 const Faqs = () => {
-    return (
-        <div>
-            <AddFaq />
-            {/* <ViewProjects /> */}
-        </div>
-    );
+	return (
+		<div>
+			<AddFaq />
+			{/* <ViewFaqs /> */}
+		</div>
+	);
 };
 
 export default Faqs;
 
-
 const AddFaq = () => {
-    const [faqQus, setFaqQus] = useState('');
-    const [faqAns, setFaqAns] = useState('');
+	const [faqQus, setFaqQus] = useState("");
+	const [faqAns, setFaqAns] = useState("");
 
-    const handleFAQForm = e => {
-        e.preventDefault();
-        console.log(faqQus, faqAns);
-    
-      };
+	const handleFAQForm = (e) => {
+		e.preventDefault();
+		console.log(faqQus, faqAns);
+	};
 
-    return (
-        <div >
-              <div className="bg-bgclr text-primary w-4/6 mx-auto p-3 mt-5 rounded-lg ">
-              <h3 className='px-3 text-2xl font-bold'>Add FAQs</h3>
-              <form className='p-3 ' onSubmit={handleFAQForm} >
+	return (
+		<div className="bg-bgclr text-primary min-h-screen">
+			<div className="bg-white w-full lg:w-4/6 mx-auto p-5 mt-4 rounded-md">
+				<div>
+					<h3 className="px-3 text-2xl font-bold text-center">Add Faqs</h3>
 
-                    <div className="mb-3 flex flex-col items-start w-full">
-                      <label for="faqQus" className="font-bold">Question</label>
-                      <input type="text" className="w-full bg-white rounded py-1 px-3 outline-none" id="faqQus" onChange={(e) => setFaqQus(e.target.value)} />
-                    </div>
-                  
+					<form className="p-3 flex flex-col items-center justify-center mt-10 gap-4">
+						<div className="form-control w-full ">
+							<input
+								type="text"
+								placeholder="Enter Question"
+								className="input  w-full  bg-bgclr"
+							/>
+						</div>
 
-                    <div className="mb-3 flex flex-col items-start w-full">
-                      <label for="faqAns" className="font-bold ">Answer</label>
-                      <textarea className="w-full bg-white rounded py-1 px-3 outline-none" id='faqAns' rows="5" onChange={(e) => setFaqAns(e.target.value)}></textarea>
-                    </div>
-                          
+						<div className="form-control w-full ">
+							<textarea
+								className="textarea  w-full  bg-bgclr"
+								placeholder="Enter Answer"
+							></textarea>
+						</div>
 
-                    <div className=" text-center mt-3">
-                      <Button type="submit">Submit</Button>
-                    </div>
-              </form>
-        </div>
-
-
-        </div>
-    );
+						<button
+							type="submit"
+							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
+						>
+							Add
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	);
 };
 
+const ViewFaqs = () => {
+	const [faqs, setFaqs] = useState([]);
+	useEffect(() => {
+		fetch("/faqs.json")
+			.then((res) => res.json())
+			.then((data) => setFaqs(data));
+	}, []);
 
-
-
-const ViewProjects = () => {
-    const [faqs, setFaqs] = useState([]);
-    useEffect(() => {
-        fetch('/faqs.json')
-            .then(res => res.json())
-            .then(data => setFaqs(data))
-    }, []);
-  
-    return (
-        <div className='text-primary p-3'>
-            <div className='bg-bgclr w-full px-10  rounded-lg mt-2 py-6'>
-                <h2 className='text-2xl text-start font-semibold mb-5'>All FAQS</h2>
-                <div className='grid gap-5'>
-                    {
-                        faqs.map(faq=><AccordionCard key={faq._id} faq={faq} />)
-                    }
-
-                </div>
-            </div>
-        </div>
-    )
-  };
-
-
-
-  
+	return (
+		<div className="text-primary p-3">
+			<div className="bg-bgclr w-full px-10  rounded-lg mt-2 py-6">
+				<h2 className="text-2xl text-start font-semibold mb-5">All FAQS</h2>
+				<div className="grid gap-5">
+					{faqs.map((faq) => (
+						<AccordionCard key={faq._id} faq={faq} />
+					))}
+				</div>
+			</div>
+		</div>
+	);
+};
 
 const AccordionCard = ({ faq }) => {
-    const { _id, faqQus, faqAns, status } = faq;
-    return (
-        <div className="accordion">
-            <div className="accordion-item bg-white border border-gray-200">
-                <h2 className="accordion-header mb-0" id={`heading${_id}`}>
-                    <button className="
+	const { _id, faqQus, faqAns, status } = faq;
+	return (
+		<div className="accordion">
+			<div className="accordion-item bg-white border border-gray-200">
+				<h2 className="accordion-header mb-0" id={`heading${_id}`}>
+					<button
+						className="
                     accordion-button
                     relative
                     flex
@@ -102,20 +98,25 @@ const AccordionCard = ({ faq }) => {
                     rounded-none
                     transition
                     focus:outline-none
-                    " type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${_id}`} aria-expanded="true"
-                    aria-controls={`collapse${_id}`}>
-                    {faqQus}
-                    </button>
-                </h2>
-                        
-                <div id={`collapse${_id}`} className="accordion-collapse collapse " aria-labelledby={`heading${_id}`}
-                    >
-                    <div className="accordion-body py-4 px-5 text-left">
-                    {faqAns}
-                    </div>
-                </div>
-            </div>
-        </div>
-      )
-  }
+                    "
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target={`#collapse${_id}`}
+						aria-expanded="true"
+						aria-controls={`collapse${_id}`}
+					>
+						{faqQus}
+					</button>
+				</h2>
 
+				<div
+					id={`collapse${_id}`}
+					className="accordion-collapse collapse "
+					aria-labelledby={`heading${_id}`}
+				>
+					<div className="accordion-body py-4 px-5 text-left">{faqAns}</div>
+				</div>
+			</div>
+		</div>
+	);
+};

@@ -37,7 +37,7 @@ const Blogs = () => {
 
     const handleBlogView = (id) => {
         console.log("clicked", id);
-        navigate(`/admin-dashboard/blogs/${id}`);
+        navigate(`/admin-dashboard/news/${id}`);
     };
 
     //Handle Delete Post

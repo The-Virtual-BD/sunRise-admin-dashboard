@@ -1,8 +1,8 @@
-# The Virtual BD || Admin Dashboard
+# SunRise || Admin Dashboard
 
-## Description
+<!-- ## Description
 [The Virtual BD](https://thevirtualbd.com/) is an IT Solution Website. we provide Every kind of IT services. 
-This Our [Admin Dashboard](https://dashboard.thevirtualbd.com/) where admin can control everything.
+This Our [Admin Dashboard](https://dashboard.thevirtualbd.com/) where admin can control everything. -->
 
 ## Prerequisite
 

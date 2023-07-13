@@ -32,9 +32,9 @@ export const sidebarMenu = [
     },
     {
         id: 5,
-        name: "Blogs",
+        name: "News",
         icon: <BsFileTextFill />,
-        path: "/admin-dashboard/blogs"
+        path: "/admin-dashboard/news"
     },
     {
         id: 6,

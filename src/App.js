@@ -70,8 +70,8 @@ function App() {
           <Route index path="/admin-dashboard/dashboard" element={<Dashboard />} />
 
 
-          <Route path='/admin-dashboard/blogs' element={<Blogs />}></Route>
-          <Route path='/admin-dashboard/blogs/:id' element={<BlogDetails />}></Route>
+          <Route path='/admin-dashboard/news' element={<Blogs />}></Route>
+          <Route path='/admin-dashboard/news/:id' element={<BlogDetails />}></Route>
 
           <Route path='/admin-dashboard/faqs' element={<Faqs />}></Route>
           <Route path='/admin-dashboard/brand' element={<Brands />}></Route>
