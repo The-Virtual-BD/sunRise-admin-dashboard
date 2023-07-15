@@ -1,14 +1,12 @@
 import React from "react";
 import { useCollection } from "../../actions/reducers";
+import SunEditor from "suneditor-react";
 
 const Products = () => {
-	const{isViewProducts}=useCollection();
+	const { isViewProducts } = useCollection();
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
-			{
-				isViewProducts?<AddProduct />:<ViewProducts />
-			}
-			
+			{isViewProducts ? <AddProduct /> : <ViewProducts />}
 		</div>
 	);
 };
@@ -45,11 +43,22 @@ const AddProduct = () => {
 							<input type="file" className="file-input  w-full bg-bgclr" />
 						</div>
 
-						<div className="form-control w-full ">
+						{/* <div className="form-control w-full ">
 							<textarea
 								className="textarea  w-full  bg-bgclr"
 								placeholder="Descriptions"
 							></textarea>
+						</div> */}
+
+						<div className="w-full">
+							<SunEditor
+								lang="en"
+								width="100%"
+								height="100%"
+								placeholder="Enter Description..."
+								autoFocus={true}
+								setDefaultStyle="font-family: 'Open Sans', sans-serif; font-size: 14px; align-items:start; min-height:200px; background:#ECF0F1"
+							/>
 						</div>
 
 						<button
@@ -65,11 +74,6 @@ const AddProduct = () => {
 	);
 };
 
-
-const ViewProducts=()=>{
-	return(
-		<div>
-			View Products
-		</div>
-	)
-}
+const ViewProducts = () => {
+	return <div>View Products</div>;
+};
