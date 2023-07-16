@@ -25,7 +25,7 @@ const AddTeam = () => {
 
 	//Handle Form
 	const onSubmit = (data) => {
-		data.description = description;
+		data.memberDesc = description;
 		console.log(data);
 		reset();
 	};
@@ -36,12 +36,17 @@ const AddTeam = () => {
 				<div>
 					<h3 className="px-3 text-2xl font-bold text-center">Add Member</h3>
 
-					<form onSubmit={handleSubmit(onSubmit)} className="p-3 flex flex-col items-center justify-center mt-10 gap-4 w-full">
+					<form
+						onSubmit={handleSubmit(onSubmit)}
+						className="p-3 flex flex-col items-center justify-center mt-10 gap-4 w-full"
+					>
 						<div className="flex flex-col lg:flex-row items-center gap-3 w-full">
 							<div className="form-control w-full  ">
 								<input
 									type="text"
 									placeholder="Name"
+									{...register("memberName", { required: true })}
+									required
 									className="input  w-full  bg-bgclr"
 								/>
 							</div>
@@ -50,13 +55,20 @@ const AddTeam = () => {
 								<input
 									type="text"
 									placeholder="Designation"
+									{...register("memberDesi", { required: true })}
+									required
 									className="input  w-full  bg-bgclr"
 								/>
 							</div>
 						</div>
 
 						<div className="form-control w-full  ">
-							<input type="file" className="file-input  w-full bg-bgclr" />
+							<input
+								type="file"
+								{...register("memberImg", { required: true })}
+								required
+								className="file-input  w-full bg-bgclr"
+							/>
 						</div>
 
 						<div className="w-full">

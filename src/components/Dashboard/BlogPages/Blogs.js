@@ -194,7 +194,7 @@ const AddBlogs = () => {
 
 	//Handle Form
 	const onSubmit = (data) => {
-		data.description = description;
+		data.newsDesc = description;
 		console.log(data);
 		reset();
 	};
@@ -214,6 +214,8 @@ const AddBlogs = () => {
 								<input
 									type="text"
 									placeholder="Title"
+									{...register("newsTitle", { required: true })}
+									required
 									className="input  w-full  bg-bgclr"
 								/>
 							</div>
@@ -222,13 +224,20 @@ const AddBlogs = () => {
 								<input
 									type="text"
 									placeholder="Category"
+									{...register("newsCategory", { required: true })}
+									required
 									className="input  w-full  bg-bgclr"
 								/>
 							</div>
 						</div>
 
 						<div className="form-control w-full  ">
-							<input type="file" className="file-input  w-full bg-bgclr" />
+							<input
+								type="file"
+								{...register("newsImg", { required: true })}
+								required
+								className="file-input  w-full bg-bgclr"
+							/>
 						</div>
 
 						<div className="w-full">

@@ -28,7 +28,7 @@ const AddWork = () => {
 
 	//Handle Form
 	const onSubmit = (data) => {
-		data.description = description;
+		data.workDesc = description;
 		console.log(data);
 		reset();
 	};

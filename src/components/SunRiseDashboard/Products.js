@@ -25,11 +25,10 @@ const AddProduct = () => {
 
 	//Handle Form
 	const onSubmit = (data) => {
-		data.description = description;
+		data.proDesc = description;
 		console.log(data);
 		reset();
 	};
-
 
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
@@ -37,12 +36,17 @@ const AddProduct = () => {
 				<div>
 					<h3 className="px-3 text-2xl font-bold text-center">Add Product</h3>
 
-					<form onSubmit={handleSubmit(onSubmit)} className="p-3 flex flex-col items-center justify-center mt-10 gap-4 w-full">
+					<form
+						onSubmit={handleSubmit(onSubmit)}
+						className="p-3 flex flex-col items-center justify-center mt-10 gap-4 w-full"
+					>
 						<div className="flex flex-col lg:flex-row items-center gap-3 w-full">
 							<div className="form-control w-full  ">
 								<input
 									type="text"
 									placeholder="Name"
+									{...register("proName", { required: true })}
+									required
 									className="input  w-full  bg-bgclr"
 								/>
 							</div>
@@ -51,16 +55,21 @@ const AddProduct = () => {
 								<input
 									type="text"
 									placeholder="Category"
+									{...register("proCategory", { required: true })}
+									required
 									className="input  w-full  bg-bgclr"
 								/>
 							</div>
 						</div>
 
 						<div className="form-control w-full  ">
-							<input type="file" className="file-input  w-full bg-bgclr" />
+							<input
+								type="file"
+								{...register("proImg", { required: true })}
+								required
+								className="file-input  w-full bg-bgclr"
+							/>
 						</div>
-
-					
 
 						<div className="w-full">
 							<SunEditor

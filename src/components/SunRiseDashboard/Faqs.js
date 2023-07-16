@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useCollection } from "../../actions/reducers";
+import { useForm } from "react-hook-form";
 
 const Faqs = () => {
-	const{isViewFaqs}=useCollection();
+	const { isViewFaqs } = useCollection();
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
-			{
-				isViewFaqs? <AddFaq />: <ViewFaqs /> 
-			}
-			
+			{isViewFaqs ? <AddFaq /> : <ViewFaqs />}
 		</div>
 	);
 };
@@ -16,12 +14,17 @@ const Faqs = () => {
 export default Faqs;
 
 const AddFaq = () => {
-	const [faqQus, setFaqQus] = useState("");
-	const [faqAns, setFaqAns] = useState("");
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
 
-	const handleFAQForm = (e) => {
-		e.preventDefault();
-		console.log(faqQus, faqAns);
+	//Handle Form
+	const onSubmit = (data) => {
+		console.log(data);
+		reset();
 	};
 
 	return (
@@ -30,17 +33,24 @@ const AddFaq = () => {
 				<div>
 					<h3 className="px-3 text-2xl font-bold text-center">Add Faqs</h3>
 
-					<form className="p-3 flex flex-col items-center justify-center mt-10 gap-4">
+					<form
+						onSubmit={handleSubmit(onSubmit)}
+						className="p-3 flex flex-col items-center justify-center mt-10 gap-4"
+					>
 						<div className="form-control w-full ">
 							<input
 								type="text"
 								placeholder="Enter Question"
+								{...register("faqQus", { required: true })}
+								required
 								className="input  w-full  bg-bgclr"
 							/>
 						</div>
 
 						<div className="form-control w-full ">
 							<textarea
+								{...register("faqAns", { required: true })}
+								required
 								className="textarea  w-full  bg-bgclr"
 								placeholder="Enter Answer"
 							></textarea>
