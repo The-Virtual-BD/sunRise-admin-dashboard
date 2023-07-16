@@ -19,6 +19,7 @@ import BlogDetails from './components/Dashboard/BlogPages/BlogDetails';
 import Brands from './components/SunRiseDashboard/Brands';
 import OurWork from './components/SunRiseDashboard/OurWork';
 import Products from './components/SunRiseDashboard/Products';
+import Teams from './components/SunRiseDashboard/Teams';
 
 function App() {
   
@@ -41,6 +42,7 @@ function App() {
           <Route path='/admin-dashboard/brand' element={<Brands />}></Route>
           <Route path='/admin-dashboard/our-work' element={<OurWork />}></Route>
           <Route path='/admin-dashboard/products' element={<Products />}></Route>
+          <Route path='/admin-dashboard/teams' element={<Teams />}></Route>
         </Route>
 
         <Route path='/profile' element={<RequireAuth> <Profile /></RequireAuth> }></Route>

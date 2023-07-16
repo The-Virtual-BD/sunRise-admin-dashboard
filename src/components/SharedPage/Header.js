@@ -29,7 +29,7 @@ const Header = () => {
 		isViewFaqs,
 		setIsViewFaqs,
 		isViewBlogs,
-		setIsViewBlogs,}=useCollection();
+		setIsViewBlogs,isViewTeam, setIsViewTeam}=useCollection();
 
 
 
@@ -169,6 +169,20 @@ const Header = () => {
                                 <button
                                     onClick={() => setIsViewFaqs(true)}
                                     className={`${isViewFaqs ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add FAQs</button>
+
+                            </div>
+                        }
+
+                        {/*Team Sub Menu */}
+                        {
+                            currentPath === "/admin-dashboard/teams" && <div className='lg:flex items-center gap-4 justify-center hidden'>
+                                <button
+                                    onClick={() => setIsViewTeam(false)}
+                                    className={`${(!isViewTeam) ? "text-blue" : ""} text-sm lg:text-lg font-semibold hover:text-blue  `}>View Member</button>
+
+                                <button
+                                    onClick={() => setIsViewTeam(true)}
+                                    className={`${isViewTeam ? "text-blue" : ""} text-sm lg:text-lg  font-semibold  hover:text-blue `}>Add Member</button>
 
                             </div>
                         }
@@ -344,6 +358,27 @@ const Header = () => {
                                             setOpen(!open)
                                         }}
                                         className={`${isViewFaqs ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add FAQs</button>
+
+                                </div>
+                            }
+
+
+                            {/* Teams Sub Menu */}
+                            {
+                                currentPath === "/admin-dashboard/teams" && <div className='flex flex-col items-start  justify-start  mt-5 mb-2 border-b-[1px] border-white lg:hidden'>
+                                    <button
+                                        onClick={() => {
+                                            setIsViewTeam(false)
+                                            setOpen(!open)
+                                        }}
+                                        className={`${(!isViewTeam) ? "text-blue bg-white" : ""} text-sm text-start w-full px-5 py-2  font-semibold hover:text-blue hover:bg-white`}>* View Member</button>
+
+                                    <button
+                                        onClick={() => {
+                                            setIsViewTeam(true)
+                                            setOpen(!open)
+                                        }}
+                                        className={`${isViewTeam ? "text-blue bg-white" : ""} text-sm text-start px-5 py-2 w-full font-semibold  hover:text-blue hover:bg-white `}>* Add Member</button>
 
                                 </div>
                             }

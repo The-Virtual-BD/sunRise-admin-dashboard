@@ -8,6 +8,7 @@ const CollectionContext = ({ children }) => {
 	const [isViewBrand, setIsViewBrand] = useState(false);
 	const [isViewFaqs, setIsViewFaqs] = useState(false);
 	const [isViewBlogs, setIsViewBlogs] = useState(false);
+	const [isViewTeam, setIsViewTeam] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(true);
 	const [user, setUser] = useState([]);
 
@@ -26,6 +27,7 @@ const CollectionContext = ({ children }) => {
 		setIsViewFaqs,
 		isViewBlogs,
 		setIsViewBlogs,
+		isViewTeam, setIsViewTeam
 	};
 
 	useEffect(() => {

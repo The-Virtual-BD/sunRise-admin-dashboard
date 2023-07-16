@@ -3,6 +3,7 @@ import {  BsFileTextFill } from 'react-icons/bs';
 import {  SiWheniwork } from 'react-icons/si';
 import {  GiDeliveryDrone } from 'react-icons/gi';
 import {  FaQuora } from 'react-icons/fa';
+import { RiProfileFill } from 'react-icons/ri';
 
 
 export const sidebarMenu = [
@@ -38,6 +39,12 @@ export const sidebarMenu = [
     },
     {
         id: 6,
+        name: "Team Members",
+        icon: <RiProfileFill />,
+        path: "/admin-dashboard/teams"
+    },
+    {
+        id: 7,
         name: "Faqs",
         icon: <FaQuora />,
         path: "/admin-dashboard/faqs"
