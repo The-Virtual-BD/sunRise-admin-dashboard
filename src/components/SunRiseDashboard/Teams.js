@@ -4,7 +4,7 @@ import { useCollection } from "../../actions/reducers";
 
 const Teams = () => {
 	const { isViewTeam } = useCollection();
-	return <div>{isViewTeam ? <AddTeam /> : <ViewTeam />}</div>;
+	return <div className="bg-bgclr text-primary min-h-screen">{isViewTeam ? <AddTeam /> : <ViewTeam />}</div>;
 };
 
 export default Teams;

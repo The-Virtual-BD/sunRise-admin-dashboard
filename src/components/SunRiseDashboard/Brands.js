@@ -4,7 +4,7 @@ import { useCollection } from "../../actions/reducers";
 const Brands = () => {
 	const{isViewBrand}=useCollection();
 	return (
-		<div>
+		<div className="bg-bgclr text-primary min-h-screen">
 			{
 				isViewBrand? <AddBrand />: <ViewBrand />
 			}

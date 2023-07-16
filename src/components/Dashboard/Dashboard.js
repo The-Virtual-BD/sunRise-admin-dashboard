@@ -198,73 +198,41 @@ const Dashboard = () => {
 
 
     return (
-        <div className=' text-primary p-3 m-3  rounded-md '>
+        <div className=' text-primary p-3 m-3  rounded-md min-h-screen'>
 
             <div className=' w-full flex flex-col lg:flex-row items-center justify-between gap-5  mb-5 rounded-md'>
                 <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
                     <div className='text-start'>
-                        <h2 className='text-xl font-semibold '>Total Users</h2>
-                        <p>{totalUser.length}</p>
+                        <h2 className='text-xl font-semibold '>Total Works</h2>
+                        <p>5</p>
                     </div>
                     <div>
-                        <RiUser3Fill className='text-3xl font-bold' />
+                        <RiUser3Fill className='text-3xl font-bold text-blue' />
                     </div>
                 </div>
 
                 <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
                     <div className='text-start'>
-                        <h2 className='text-xl font-semibold '>Blogger Applications</h2>
-                        <p>{totalBlogReq.length}</p>
+                        <h2 className='text-xl font-semibold '>Total Products</h2>
+                        <p>12</p>
                     </div>
                     <div>
-                        <FaUserCheck className='text-3xl font-bold' />
+                        <FaUserCheck className='text-3xl font-bold text-blue' />
                     </div>
                 </div>
 
                 <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
                     <div className='text-start'>
-                        <h2 className='text-xl font-semibold '>Subscription Request</h2>
-                        <p>{pendiingSubReq?.length}</p>
+                        <h2 className='text-xl font-semibold '>Total News</h2>
+                        <p>10</p>
                     </div>
                     <div>
-                        <CgPlayListCheck className='text-3xl font-bold' />
+                        <CgPlayListCheck className='text-3xl font-bold text-blue' />
                     </div>
                 </div>
             </div>
 
-          {/*   <div className=' w-full flex flex-col lg:flex-row items-center justify-between gap-5  mb-5 rounded-md'>
-                <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
-                    <div className='text-start'>
-                        <h2 className='text-xl font-semibold '>Blog Request</h2>
-                        <p>{totalUser.length}</p>
-                    </div>
-                    <div>
-                        <RiUser3Fill className='text-3xl font-bold' />
-                    </div>
-                </div>
-
-                <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
-                    <div className='text-start'>
-                        <h2 className='text-xl font-semibold '>Job Application</h2>
-                        <p>{totalBlogReq.length}</p>
-                    </div>
-                    <div>
-                        <FaUserCheck className='text-3xl font-bold' />
-                    </div>
-                </div>
-
-                <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
-                    <div className='text-start'>
-                        <h2 className='text-xl font-semibold '>Comment Request</h2>
-                        <p>{pendiingSubReq?.length}</p>
-                    </div>
-                    <div>
-                        <CgPlayListCheck className='text-3xl font-bold' />
-                    </div>
-                </div>
-            </div>
- */}
-
+    
 
 
 
@@ -273,7 +241,7 @@ const Dashboard = () => {
 
             <div className='flex flex-col lg:flex-row items-start  gap-5 w-full rounded-md'>
                 <div className='w-full bg-white p-3 text-start rounded-md' >
-                    <h2 className='text-2xl font-semibold mb-4 pl-1'>Recent Notices</h2>
+                    <h2 className='text-2xl font-semibold mb-4 pl-1'>Recent News</h2>
                     <div>
                         {notices.length && (
                             <SmallTable columns={NOTICE_COLUMNS()} data={recentNotice} headline={" "} />
@@ -282,7 +250,7 @@ const Dashboard = () => {
                 </div>
 
                 <div className='w-full bg-white p-3 text-start rounded-md' >
-                    <h2 className='text-2xl font-semibold mb-4 pl-1'>Recent Blogs</h2>
+                    <h2 className='text-2xl font-semibold mb-4 pl-1'>Team Members</h2>
                     <div>
                         {blogs.length && (
                             <SmallTable columns={BLOG_COLUMNS()} data={recentBlogs} headline={" "} />

@@ -199,34 +199,9 @@ const Header = () => {
                         (token) ?
                             <div className='hidden lg:flex items-center gap-2'>
                                 <div className='text-end'>
-                                    <h3 className='text-lg font-bold'>{user?.first_name}</h3>
-                                    <p className='text-sm font-semibold'>{user?.profession}</p>
+                                    <h3 className='text-lg font-bold'>Admin</h3>
+                                    <p className='text-sm font-semibold'>SunRise Com.</p>
                                 </div>
-
-
-
-                                <div className="flex justify-center">
-                                    <div>
-                                        <div className="dropdown relative">
-                                            <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                {
-                                                    user?.photo?
-                                                    <img src={`${baseURL}/${user?.photo}`} alt="admin" srcSet="" style={{ width: "50px", height: "50px", borderRadius: "100%" }} onClick={() => setProfile(!profile)} />:
-                                                    <img src={blankUser} alt="admin" srcSet="" style={{ width: "50px", height: "50px", borderRadius: "100%" }} onClick={() => setProfile(!profile)} />
-                                                }
-                                            </button>
-                                            <ul className="dropdown-menu w-36 absolute bg-white text-base z-50 float-left py-1.5 list-none text-left rounded-lg shadow-lg mt-1  hidden  m-0 bg-clip-padding border-none "
-                                                aria-labelledby="dropdownMenuButton1">
-                                                <li>
-                                                    <Link to={"/profile"} className="dropdown-item text-sm py-1.5 px-4 block w-full  whitespace-nowrap  bg-transparent text-primary hover:bg-bgclr text-center font-bold">Profile</Link > </li>
-                                                <li>
-                                                    <button className="dropdown-item text-sm py-1.5 px-4  block w-full  whitespace-nowrap  bg-transparent text-primary hover:bg-bgclr font-bold" onClick={handleLogout}>Logout </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div> : ""
                     }
 
@@ -254,8 +229,8 @@ const Header = () => {
                         <div className="bg-blue text-white  rounded w-60  py-3 z-10 absolute top-0 left-0  overflow-y-auto overflow-x-hidden ">
                             {/* <img src="/assets/admin.png" alt="admin" srcSet="" /> */}
                             <div className='flex flex-col lg:hidden  text-center '>
-                                <h3 className='text-lg font-bold'>{user.first_name}</h3>
-                                <p className='text-sm'>{user.profession}</p>
+                                <h3 className='text-lg font-bold'>Admin</h3>
+                                <p className='text-sm'>SunRise Com.</p>
                             </div>
 
 

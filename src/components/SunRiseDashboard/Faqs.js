@@ -4,7 +4,7 @@ import { useCollection } from "../../actions/reducers";
 const Faqs = () => {
 	const{isViewFaqs}=useCollection();
 	return (
-		<div>
+		<div className="bg-bgclr text-primary min-h-screen">
 			{
 				isViewFaqs? <AddFaq />: <ViewFaqs /> 
 			}
