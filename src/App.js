@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import './App.css';
 import 'suneditor/dist/css/suneditor.min.css';
+import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
 
 import RequireAuth from './components/utilities/RequireAuth';
 
@@ -20,37 +21,44 @@ import Brands from './components/SunRiseDashboard/Brands';
 import OurWork from './components/SunRiseDashboard/OurWork';
 import Products from './components/SunRiseDashboard/Products';
 import Teams from './components/SunRiseDashboard/Teams';
+import FaqsEdit from './components/SunRiseDashboard/FaqsEdit';
+
+const queryClient = new QueryClient();
 
 function App() {
   
  
   
   return (
-    <CollectionContext>
-      
-      <Routes>
-        <Route path="/" element={<RequireAuth> <AdminDashboard /> </RequireAuth>  } />
+    <QueryClientProvider client={queryClient}>
+      <CollectionContext>
+        
+        <Routes>
+          <Route path="/" element={<RequireAuth> <AdminDashboard /> </RequireAuth>  } />
 
-        <Route path="/admin-dashboard" element={<RequireAuth> <AdminDashboard /> </RequireAuth>  }>
+          <Route path="/admin-dashboard" element={<RequireAuth> <AdminDashboard /> </RequireAuth>  }>
 
-          <Route index path="/admin-dashboard/dashboard" element={<Dashboard />} />
+            <Route index path="/admin-dashboard/dashboard" element={<Dashboard />} />
 
-          <Route path='/admin-dashboard/news' element={<Blogs />}></Route>
-          <Route path='/admin-dashboard/news/:id' element={<BlogDetails />}></Route>
+            <Route path='/admin-dashboard/news' element={<Blogs />}></Route>
+            <Route path='/admin-dashboard/news/:id' element={<BlogDetails />}></Route>
 
-          <Route path='/admin-dashboard/faqs' element={<Faqs />}></Route>
-          <Route path='/admin-dashboard/brand' element={<Brands />}></Route>
-          <Route path='/admin-dashboard/our-work' element={<OurWork />}></Route>
-          <Route path='/admin-dashboard/products' element={<Products />}></Route>
-          <Route path='/admin-dashboard/teams' element={<Teams />}></Route>
-        </Route>
+            <Route path='/admin-dashboard/faqs' element={<Faqs />}></Route>
+            <Route path='/admin-dashboard/faqs/:id' element={<FaqsEdit />}></Route>
 
-        <Route path='/profile' element={<RequireAuth> <Profile /></RequireAuth> }></Route>
-        <Route path='/sign-in' element={<Login />}></Route>
-      </Routes>
+            <Route path='/admin-dashboard/brand' element={<Brands />}></Route>
+            <Route path='/admin-dashboard/our-work' element={<OurWork />}></Route>
+            <Route path='/admin-dashboard/products' element={<Products />}></Route>
+            <Route path='/admin-dashboard/teams' element={<Teams />}></Route>
+          </Route>
 
-      <ToastContainer />
-    </CollectionContext>
+          <Route path='/profile' element={<RequireAuth> <Profile /></RequireAuth> }></Route>
+          <Route path='/sign-in' element={<Login />}></Route>
+        </Routes>
+
+        <ToastContainer />
+      </CollectionContext>
+    </QueryClientProvider>
   );
 }
 

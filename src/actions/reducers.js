@@ -1,4 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { baseURL } from "../components/utilities/url";
+import { fetchFAQs } from "./fetching";
 
 export const APPContext = createContext();
 
@@ -12,23 +15,17 @@ const CollectionContext = ({ children }) => {
 	const [menuOpen, setMenuOpen] = useState(true);
 	const [user, setUser] = useState([]);
 
-	const value = {
-		menuOpen,
-		setMenuOpen,
-		user,
-		setUser,
-		isViewWork,
-		setIsViewWork,
-		isViewProducts,
-		setIsViewProducts,
-		isViewBrand,
-		setIsViewBrand,
-		isViewFaqs,
-		setIsViewFaqs,
-		isViewBlogs,
-		setIsViewBlogs,
-		isViewTeam, setIsViewTeam
-	};
+
+	// const [user] = useAuthState(auth);
+	// const token = window.localStorage.getItem("token");
+
+	
+
+	const { data: faqs, isLoading: faqLoading } = useQuery("faqs",fetchFAQs);
+	console.log(faqs)
+
+	
+
 
 	useEffect(() => {
 		const getUserStr = localStorage.getItem("user");
@@ -38,6 +35,11 @@ const CollectionContext = ({ children }) => {
 			setUser(getUser);
 		}
 	}, []);
+
+
+
+	const value = {menuOpen,setMenuOpen,user,setUser,isViewWork,setIsViewWork,isViewProducts,setIsViewProducts,isViewBrand,setIsViewBrand,isViewFaqs,setIsViewFaqs,isViewBlogs,setIsViewBlogs,isViewTeam,setIsViewTeam,faqs,faqLoading};
+
 
 	return <APPContext.Provider value={value}>{children}</APPContext.Provider>;
 };
@@ -49,29 +51,3 @@ export const useCollection = () => {
 };
 
 export default CollectionContext;
-
-/* const [user] = useAuthState(auth);
-	const token = window.localStorage.getItem("token");
-
-	//Fetch Collections
-	const fetchCollections = async () => {
-		const res = await fetch(`${baseUrl}/collections`);
-		const data = await res.json();
-		return data?.data;
-	};
-
-	//Fetch Products
-	const fetchProducts = async () => {
-		const res = await fetch(`${baseUrl}/sales`);
-		const data = await res.json();
-		return data?.data;
-	};
-
-	const { data: collection, isLoading: loading } = useQuery(
-		"collections",
-		fetchCollections
-	);
-	const { data: products, isLoading: loadingProducts } = useQuery(
-		"products",
-		fetchProducts
-	); */

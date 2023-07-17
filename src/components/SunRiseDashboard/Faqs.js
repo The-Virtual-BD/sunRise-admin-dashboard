@@ -1,6 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useCollection } from "../../actions/reducers";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { baseURL } from "../utilities/url";
+import { AiFillDelete } from "react-icons/ai";
+import { FiEdit } from "react-icons/fi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Faqs = () => {
 	const { isViewFaqs } = useCollection();
@@ -21,10 +27,19 @@ const AddFaq = () => {
 		formState: { errors },
 	} = useForm();
 
-	//Handle Form
+	//Handle Form data
 	const onSubmit = (data) => {
-		console.log(data);
-		reset();
+		try {
+			console.log(data);
+			const url = `${baseURL}/faqs/create`;
+			axios
+				.post(url, data)
+				.then((res) => console.log(res))
+				.catch((error) => console.log(error));
+			reset();
+		} catch {
+			console.log("Data Post Failed");
+		}
 	};
 
 	return (
@@ -70,67 +85,63 @@ const AddFaq = () => {
 };
 
 const ViewFaqs = () => {
-	const [faqs, setFaqs] = useState([]);
-	useEffect(() => {
-		fetch("/faqs.json")
-			.then((res) => res.json())
-			.then((data) => setFaqs(data));
-	}, []);
+	const { faqs, faqLoading } = useCollection();
+	const navigate=useNavigate();
+
+	if (faqLoading) {
+		return <p>Loading...</p>;
+	}
+
+
+	//Handle Delete Btn
+	const handleDeleteBtn = (id) => {
+		const procced = window.confirm('You want to delete?');
+        if (procced) {
+            axios.delete(`${baseURL}/faqs/${id}`)
+                .then(response => {
+                    console.log(`Deleted post with ID ${id}`);
+                    toast.success("Deleted successfully!");
+
+                })
+                .catch(error => {
+                    console.error(error);
+                    toast.error("Deleted Failed!");
+                });
+        };
+	};
+
+	//Handle Edit Btn
+	const handleEditBtn=(id)=>{
+		navigate(`/admin-dashboard/faqs/${id}`)
+	};
 
 	return (
 		<div className="text-primary p-3">
-			<div className="bg-bgclr w-full px-10  rounded-lg mt-2 py-6">
-				<h2 className="text-2xl text-start font-semibold mb-5">All FAQS</h2>
-				<div className="grid gap-5">
-					{faqs.map((faq) => (
-						<AccordionCard key={faq._id} faq={faq} />
-					))}
-				</div>
-			</div>
-		</div>
-	);
-};
+			{faqs.map((faqs) => (
+				<div key={faqs._id} className="flex items-center gap-5 ">
+					<div className="collapse collapse-arrow bg-white mb-3">
+						<input type="checkbox" name="my-accordion-2" />
+						<div className="collapse-title font-medium ">{faqs?.faqQus}</div>
+						<div className="collapse-content">
+							<p>{faqs?.faqAns}</p>
+						</div>
+					</div>
 
-const AccordionCard = ({ faq }) => {
-	const { _id, faqQus, faqAns, status } = faq;
-	return (
-		<div className="accordion">
-			<div className="accordion-item bg-white border border-gray-200">
-				<h2 className="accordion-header mb-0" id={`heading${_id}`}>
-					<button
-						className="
-                    accordion-button
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    px-5
-                    text-base text-gray-800 text-left
-                    bg-white
-                    border-0
-                    rounded-none
-                    transition
-                    focus:outline-none
-                    "
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target={`#collapse${_id}`}
-						aria-expanded="true"
-						aria-controls={`collapse${_id}`}
-					>
-						{faqQus}
-					</button>
-				</h2>
+					<div className="flex items-center justify-center  gap-2 ">
+						<button  onClick={() => handleEditBtn(faqs._id)}>
+							<div className="w-12 h-12 rounded-md bg-[#00A388]  text-white grid items-center justify-center">
+								<FiEdit className="text-xl " />
+							</div>
+						</button>
 
-				<div
-					id={`collapse${_id}`}
-					className="accordion-collapse collapse "
-					aria-labelledby={`heading${_id}`}
-				>
-					<div className="accordion-body py-4 px-5 text-left">{faqAns}</div>
+						<button onClick={() => handleDeleteBtn(faqs._id)}>
+							<div className="w-12 h-12 rounded-md bg-[#FF0000] text-white grid items-center justify-center">
+								<AiFillDelete className="text-xl  text-white" />
+							</div>
+						</button>
+					</div>
 				</div>
-			</div>
+			))}
 		</div>
 	);
 };
