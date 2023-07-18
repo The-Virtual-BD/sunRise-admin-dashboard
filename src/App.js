@@ -44,10 +44,8 @@ function App() {
 					<Route
 						path="/admin-dashboard"
 						element={
-							<RequireAuth>
-								{" "}
-								<AdminDashboard />{" "}
-							</RequireAuth>
+						
+								<AdminDashboard />
 						}
 					>
 						<Route
