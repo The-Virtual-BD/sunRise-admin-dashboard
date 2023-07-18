@@ -3,6 +3,9 @@ import { useCollection } from "../../actions/reducers";
 import { useForm } from "react-hook-form";
 import { baseURL } from "../utilities/url";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { FiEdit } from "react-icons/fi";
+import { AiFillDelete } from "react-icons/ai";
 
 const Brands = () => {
 	const { isViewBrand } = useCollection();
@@ -23,15 +26,23 @@ const AddBrand = () => {
 	const handleBrandAddForm = (e) => {
 		e.preventDefault();
 
-		const brandForm = new FormData();
-		brandForm.append("brandName", name);
-		brandForm.append("brandImg", img);
+		try {
+			const brandForm = new FormData();
+			brandForm.append("brandName", name);
+			brandForm.append("brandImg", img);
 
-		const url = `${baseURL}/brand/create`;
-		axios
-			.post(url, brandForm)
-			.then((res) => console.log(res))
-			.catch((error) => console.log(error));
+			const url = `${baseURL}/brand/create`;
+			axios
+				.post(url, brandForm)
+				.then((res) => {
+					console.log(res);
+					toast.success("Brand Added Successfully");
+				})
+				.catch((error) => console.log(error));
+		} catch (error) {
+			console.log(error);
+			toast.error("Brand Added Failed");
+		}
 	};
 
 	return (
@@ -82,14 +93,58 @@ const ViewBrand = () => {
 		return <p>Loading...</p>;
 	};
 
-	console.log(brands)
+	// console.log(brands);
+
+	
+	//Handle Delete Btn
+	const handleDeleteBtn = (id) => {
+		const procced = window.confirm('You want to delete?');
+        if (procced) {
+            axios.delete(`${baseURL}/brand/${id}`)
+                .then(response => {
+                    // console.log(`Deleted post with ID ${id}`);
+                    toast.success("Deleted successfully!");
+
+                })
+                .catch(error => {
+                    // console.error(error);
+                    toast.error("Deleted Failed!");
+                });
+        };
+	};
+
+
+
+
+	
 
 	return (
 		<div className="grid grid-cols-2 lg:grid-cols-4 gap-5 p-4">
-			{brands.map((brand) => (
-				<div key={brand._id}>
-					  <img src={`${baseURL}/${brand?.brandImg}`} alt="" />
-					<h2>{brand.brandName}</h2>
+			{brands?.map((brand) => (
+				<div key={brand._id} className="bg-white rounded-md shadow-md">
+					<img
+						src={`${baseURL}/${brand?.brandImg}`}
+						alt={brand?.brandName}
+						className="w-full min-h-[250px] rounded-t-md"
+					/>
+					<div className="flex items-center justify-between p-5">
+						<h2 className="text-xl ">{brand?.brandName}</h2>
+						<div>
+							<div className="flex items-center justify-center  gap-2 ">
+								{/* <button>
+									<div className="w-8 h-8 rounded-md bg-[#00A388]  text-white grid items-center justify-center">
+										<FiEdit className="text-lg " />
+									</div>
+								</button> */}
+
+								<button onClick={() => handleDeleteBtn(brand?._id)}>
+									<div className="w-8 h-8 rounded-md bg-[#FF0000] text-white grid items-center justify-center">
+										<AiFillDelete className="text-lg  text-white" />
+									</div>
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			))}
 		</div>
