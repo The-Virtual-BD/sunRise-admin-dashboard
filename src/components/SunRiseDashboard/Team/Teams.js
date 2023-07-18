@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import { useCollection } from "../../actions/reducers";
 import SunEditor from "suneditor-react";
+import { useCollection } from "../../../actions/reducers";
 import { useForm } from "react-hook-form";
 
-const Products = () => {
-	const { isViewProducts } = useCollection();
+const Teams = () => {
+	const { isViewTeam } = useCollection();
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
-			{isViewProducts ? <AddProduct /> : <ViewProducts />}
+			{isViewTeam ? <AddTeam /> : <ViewTeam />}
 		</div>
 	);
 };
 
-export default Products;
+export default Teams;
 
-const AddProduct = () => {
+const AddTeam = () => {
 	const {
 		register,
 		handleSubmit,
@@ -25,7 +25,7 @@ const AddProduct = () => {
 
 	//Handle Form
 	const onSubmit = (data) => {
-		data.proDesc = description;
+		data.memberDesc = description;
 		console.log(data);
 		reset();
 	};
@@ -34,7 +34,7 @@ const AddProduct = () => {
 		<div className="bg-bgclr text-primary min-h-screen">
 			<div className="bg-white w-full lg:w-4/6 mx-auto p-5 mt-4 rounded-md">
 				<div>
-					<h3 className="px-3 text-2xl font-bold text-center">Add Product</h3>
+					<h3 className="px-3 text-2xl font-bold text-center">Add Member</h3>
 
 					<form
 						onSubmit={handleSubmit(onSubmit)}
@@ -45,7 +45,7 @@ const AddProduct = () => {
 								<input
 									type="text"
 									placeholder="Name"
-									{...register("proName", { required: true })}
+									{...register("memberName", { required: true })}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -54,8 +54,8 @@ const AddProduct = () => {
 							<div className="form-control w-full  ">
 								<input
 									type="text"
-									placeholder="Category"
-									{...register("proCategory", { required: true })}
+									placeholder="Designation"
+									{...register("memberDesi", { required: true })}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -65,7 +65,7 @@ const AddProduct = () => {
 						<div className="form-control w-full  ">
 							<input
 								type="file"
-								{...register("proImg", { required: true })}
+								{...register("memberImg", { required: true })}
 								required
 								className="file-input  w-full bg-bgclr"
 							/>
@@ -118,6 +118,6 @@ const AddProduct = () => {
 	);
 };
 
-const ViewProducts = () => {
-	return <div>View Products</div>;
+const ViewTeam = () => {
+	return <div>View Team</div>;
 };

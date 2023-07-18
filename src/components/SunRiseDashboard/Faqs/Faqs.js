@@ -1,8 +1,8 @@
 import React from "react";
-import { useCollection } from "../../actions/reducers";
+import { useCollection } from "../../../actions/reducers";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { baseURL } from "../utilities/url";
+import { baseURL } from "../../utilities/url";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -37,8 +37,8 @@ const AddFaq = () => {
 				.then((res) => console.log(res))
 				.catch((error) => console.log(error));
 			reset();
-		} catch(error) {
-			console.log("Data Post Failed",error);
+		} catch (error) {
+			console.log("Data Post Failed", error);
 		}
 	};
 
@@ -86,33 +86,32 @@ const AddFaq = () => {
 
 const ViewFaqs = () => {
 	const { faqs, faqLoading } = useCollection();
-	const navigate=useNavigate();
+	const navigate = useNavigate();
 
 	if (faqLoading) {
 		return <p>Loading...</p>;
 	}
 
-
 	//Handle Delete Btn
 	const handleDeleteBtn = (id) => {
-		const procced = window.confirm('You want to delete?');
-        if (procced) {
-            axios.delete(`${baseURL}/faqs/${id}`)
-                .then(response => {
-                    console.log(`Deleted post with ID ${id}`);
-                    toast.success("Deleted successfully!");
-
-                })
-                .catch(error => {
-                    console.error(error);
-                    toast.error("Deleted Failed!");
-                });
-        };
+		const procced = window.confirm("You want to delete?");
+		if (procced) {
+			axios
+				.delete(`${baseURL}/faqs/${id}`)
+				.then((response) => {
+					console.log(`Deleted post with ID ${id}`);
+					toast.success("Deleted successfully!");
+				})
+				.catch((error) => {
+					console.error(error);
+					toast.error("Deleted Failed!");
+				});
+		}
 	};
 
 	//Handle Edit Btn
-	const handleEditBtn=(id)=>{
-		navigate(`/admin-dashboard/faqs/${id}`)
+	const handleEditBtn = (id) => {
+		navigate(`/admin-dashboard/faqs/${id}`);
 	};
 
 	return (
@@ -128,7 +127,7 @@ const ViewFaqs = () => {
 					</div>
 
 					<div className="flex items-center justify-center  gap-2 ">
-						<button  onClick={() => handleEditBtn(faqs._id)}>
+						<button onClick={() => handleEditBtn(faqs._id)}>
 							<div className="w-12 h-12 rounded-md bg-[#00A388]  text-white grid items-center justify-center">
 								<FiEdit className="text-xl " />
 							</div>

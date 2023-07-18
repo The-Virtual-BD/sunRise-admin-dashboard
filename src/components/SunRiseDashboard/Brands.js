@@ -37,6 +37,7 @@ const AddBrand = () => {
 				.then((res) => {
 					console.log(res);
 					toast.success("Brand Added Successfully");
+					e.target.reset();
 				})
 				.catch((error) => console.log(error));
 		} catch (error) {
@@ -68,6 +69,7 @@ const AddBrand = () => {
 						<div className="form-control w-full  ">
 							<input
 								type="file"
+								accept=".png, .jpg, .jpeg, .svg"
 								onChange={(e) => setImg(e.target.files[0])}
 								required
 								className="file-input  w-full bg-bgclr"
@@ -91,32 +93,26 @@ const ViewBrand = () => {
 	const { brands, brandLoading } = useCollection();
 	if (brandLoading) {
 		return <p>Loading...</p>;
-	};
+	}
 
 	// console.log(brands);
 
-	
 	//Handle Delete Btn
 	const handleDeleteBtn = (id) => {
-		const procced = window.confirm('You want to delete?');
-        if (procced) {
-            axios.delete(`${baseURL}/brand/${id}`)
-                .then(response => {
-                    // console.log(`Deleted post with ID ${id}`);
-                    toast.success("Deleted successfully!");
-
-                })
-                .catch(error => {
-                    // console.error(error);
-                    toast.error("Deleted Failed!");
-                });
-        };
+		const procced = window.confirm("You want to delete?");
+		if (procced) {
+			axios
+				.delete(`${baseURL}/brand/${id}`)
+				.then((response) => {
+					// console.log(`Deleted post with ID ${id}`);
+					toast.success("Deleted successfully!");
+				})
+				.catch((error) => {
+					// console.error(error);
+					toast.error("Deleted Failed!");
+				});
+		}
 	};
-
-
-
-
-	
 
 	return (
 		<div className="grid grid-cols-2 lg:grid-cols-4 gap-5 p-4">

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
+import { useCollection } from "../../../actions/reducers";
 import SunEditor from "suneditor-react";
-import { useCollection } from "../../actions/reducers";
 import { useForm } from "react-hook-form";
 
-const Teams = () => {
-	const { isViewTeam } = useCollection();
+const OurWork = () => {
+	const { isViewWork } = useCollection();
+
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
-			{isViewTeam ? <AddTeam /> : <ViewTeam />}
+			{isViewWork ? <AddWork /> : <ViewWork />}
 		</div>
 	);
 };
 
-export default Teams;
+export default OurWork;
 
-const AddTeam = () => {
+const AddWork = () => {
 	const {
 		register,
 		handleSubmit,
@@ -25,7 +26,7 @@ const AddTeam = () => {
 
 	//Handle Form
 	const onSubmit = (data) => {
-		data.memberDesc = description;
+		data.workDesc = description;
 		console.log(data);
 		reset();
 	};
@@ -34,7 +35,7 @@ const AddTeam = () => {
 		<div className="bg-bgclr text-primary min-h-screen">
 			<div className="bg-white w-full lg:w-4/6 mx-auto p-5 mt-4 rounded-md">
 				<div>
-					<h3 className="px-3 text-2xl font-bold text-center">Add Member</h3>
+					<h3 className="px-3 text-2xl font-bold text-center">Add Work</h3>
 
 					<form
 						onSubmit={handleSubmit(onSubmit)}
@@ -45,7 +46,7 @@ const AddTeam = () => {
 								<input
 									type="text"
 									placeholder="Name"
-									{...register("memberName", { required: true })}
+									{...register("workName", { required: true })}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -54,8 +55,8 @@ const AddTeam = () => {
 							<div className="form-control w-full  ">
 								<input
 									type="text"
-									placeholder="Designation"
-									{...register("memberDesi", { required: true })}
+									placeholder="Category"
+									{...register("workCategory", { required: true })}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -65,7 +66,7 @@ const AddTeam = () => {
 						<div className="form-control w-full  ">
 							<input
 								type="file"
-								{...register("memberImg", { required: true })}
+								{...register("workImg", { required: true })}
 								required
 								className="file-input  w-full bg-bgclr"
 							/>
@@ -118,6 +119,6 @@ const AddTeam = () => {
 	);
 };
 
-const ViewTeam = () => {
-	return <div>View Team</div>;
+const ViewWork = () => {
+	return <div>View Work</div>;
 };
