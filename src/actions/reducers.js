@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { baseURL } from "../components/utilities/url";
-import { fetchFAQs } from "./fetching";
+import { fetchBrand, fetchFAQs } from "./fetching";
 
 export const APPContext = createContext();
 
@@ -22,7 +22,8 @@ const CollectionContext = ({ children }) => {
 	
 
 	const { data: faqs, isLoading: faqLoading } = useQuery("faqs",fetchFAQs);
-	console.log(faqs)
+	const { data: brands, isLoading: brandLoading } = useQuery("brands",fetchBrand);
+	// console.log(brands)
 
 	
 
@@ -38,7 +39,7 @@ const CollectionContext = ({ children }) => {
 
 
 
-	const value = {menuOpen,setMenuOpen,user,setUser,isViewWork,setIsViewWork,isViewProducts,setIsViewProducts,isViewBrand,setIsViewBrand,isViewFaqs,setIsViewFaqs,isViewBlogs,setIsViewBlogs,isViewTeam,setIsViewTeam,faqs,faqLoading};
+	const value = {menuOpen,setMenuOpen,user,setUser,isViewWork,setIsViewWork,isViewProducts,setIsViewProducts,isViewBrand,setIsViewBrand,isViewFaqs,setIsViewFaqs,isViewBlogs,setIsViewBlogs,isViewTeam,setIsViewTeam,faqs,faqLoading,brands,brandLoading};
 
 
 	return <APPContext.Provider value={value}>{children}</APPContext.Provider>;

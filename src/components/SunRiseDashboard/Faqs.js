@@ -30,15 +30,15 @@ const AddFaq = () => {
 	//Handle Form data
 	const onSubmit = (data) => {
 		try {
-			console.log(data);
+			// console.log(data);
 			const url = `${baseURL}/faqs/create`;
 			axios
 				.post(url, data)
 				.then((res) => console.log(res))
 				.catch((error) => console.log(error));
 			reset();
-		} catch {
-			console.log("Data Post Failed");
+		} catch(error) {
+			console.log("Data Post Failed",error);
 		}
 	};
 

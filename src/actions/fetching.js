@@ -6,3 +6,10 @@ export const fetchFAQs = async () => {
     const data = await res.json();
     return data?.data;
 };
+
+//Fetch Brand
+export const fetchBrand = async () => {
+    const res = await fetch(`${baseURL}/brand/all`);
+    const data = await res.json();
+    return data?.data;
+};

@@ -1,54 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { baseURL } from "../utilities/url";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const FaqsEdit = () => {
-	const { id } = useParams()
-    const [sinFaq, setSinFaq] = useState({});
+	const { id } = useParams();
+	const [sinFaq, setSinFaq] = useState({});
 
-    const [faqAnswer, setFaqAnswer] = useState('');
-    const [faqQuestion, setFaqQuestion] = useState('');
-   
+	const [faqAnswer, setFaqAnswer] = useState("");
+	const [faqQuestion, setFaqQuestion] = useState("");
 
-    //Update Value
-    useEffect(() => {
-        if (sinFaq) {
-            setFaqAnswer(sinFaq.faqAns);
-            setFaqQuestion(sinFaq.faqQus);
-        }
-    }, [sinFaq]);
+	//Update Value
+	useEffect(() => {
+		if (sinFaq) {
+			setFaqAnswer(sinFaq.faqAns);
+			setFaqQuestion(sinFaq.faqQus);
+		}
+	}, [sinFaq]);
 
-    //Handle Get Carieer
-    useEffect(() => {
-        const url = `${baseURL}/faqs/${id}`;
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setSinFaq(data))
-    }, [id]);
+	//Handle Get Carieer
+	useEffect(() => {
+		const url = `${baseURL}/faqs/${id}`;
+		fetch(url)
+			.then((res) => res.json())
+			.then((data) => setSinFaq(data));
+	}, [id]);
 
+	// console.log(collection)
 
-    // console.log(collection)
+	//Handle Edit Collection Form
+	const handleEditForm = async (e) => {
+		e.preventDefault();
+		const newValue = { faqAns: faqAnswer, faqQus: faqQuestion };
 
-
-    //Handle Edit Collection Form
-    const handleEditForm = async (e) => {
-        e.preventDefault();
-        const newValue = {faqAns: faqAnswer,faqQus:faqQuestion}
-
-        try {
-            const response = await axios.put(`${baseURL}/faqs/${id}`, newValue);
-            console.log(response); 
-            toast.success("Updated successfully!");
-        } catch (error) {
-            console.error(error);
-            toast.error("Update Failed!")
-        };
-
-    };
-
+		try {
+			const response = await axios.put(`${baseURL}/faqs/${id}`, newValue);
+			// console.log(response);
+			toast.success("Updated successfully!");
+		} catch (error) {
+			console.error(error);
+			toast.error("Update Failed!");
+		}
+	};
 
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
@@ -65,7 +59,7 @@ const FaqsEdit = () => {
 								type="text"
 								placeholder="Enter Question"
 								value={faqQuestion}
-								onChange={(e)=>setFaqQuestion(e.target.value)}
+								onChange={(e) => setFaqQuestion(e.target.value)}
 								className="input  w-full  bg-bgclr"
 							/>
 						</div>
@@ -75,7 +69,7 @@ const FaqsEdit = () => {
 								className="textarea  w-full  bg-bgclr"
 								placeholder="Enter Answer"
 								value={faqAnswer}
-								onChange={(e)=>setFaqAnswer(e.target.value)}
+								onChange={(e) => setFaqAnswer(e.target.value)}
 							></textarea>
 						</div>
 
