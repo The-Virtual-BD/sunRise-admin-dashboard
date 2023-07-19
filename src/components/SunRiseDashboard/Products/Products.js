@@ -24,7 +24,7 @@ export default Products;
 const AddProduct = () => {
 	const [proName, setProName] = useState("");
 	const [proCategory, setProCategory] = useState("");
-	const [proImg, setProImg] = useState("");
+	const [proImg, setProImg] = useState(null);
 	const [proDesc, setProDesc] = useState("");
 
 	//Handle Product Add Form

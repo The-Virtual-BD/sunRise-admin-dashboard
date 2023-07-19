@@ -21,101 +21,7 @@ const Dashboard = () => {
     const [blogs, setBlogs] = useState([]);
     
 
-    const pendiingSubReq=totalSubReq?.filter(req=>req.status=== 1  );
-    // console.log(pendiingSubReq);
-
-    const recentNotice = [...notices].reverse().slice(0, 5);
-    const recentBlogs = [...blogs].reverse().slice(0, 5);
-
-    //Get Users
-    useEffect(() => {
-        const perUrl = `${baseURL}/api/admin/users`;
-        fetch(perUrl, {
-            method: "GET",
-            headers: {
-                'content-type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => setTotalUser(data.user))
-    }, [token]);
-
-
-    //Get blogger req
-    useEffect(() => {
-        const sUrl = `${baseURL}/api/admin/bloggerApplication`;
-        // setLoading(true);
-        fetch(sUrl, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                // setLoading(false);
-                console.log(data.blogger)
-                setTotalBlogReq(data.blogger)
-            })
-    }, [token]);
-
-
-    //Get All Sub Req
-    useEffect(() => {
-        const perUrl = `${baseURL}/api/admin/subscriptions`;
-        fetch(perUrl, {
-            method: "GET",
-            headers: {
-                'content-type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => setTotalSubReq(data.data))
-    }, [token]);
-
-
-    //Get Notices
-    useEffect(() => {
-        const perUrl = `${baseURL}/api/admin/notices`;
-        fetch(perUrl, {
-            method: "GET",
-            headers: {
-                'content-type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data.data);
-                setNotices(data.data)
-            })
-    }, [token]);
-
-
-
-    //Handle Get posts
-    useEffect(() => {
-        const sUrl = `${baseURL}/api/admin/posts`;
-        // setLoading(true);
-
-        fetch(sUrl, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                // setLoading(false);
-                // console.log(data)
-                setBlogs(data.data)
-            })
-    }, [token]);
-
+   
 
     
 
@@ -125,7 +31,7 @@ const Dashboard = () => {
     };
 
 
-    const NOTICE_COLUMNS = () => {
+  /*   const NOTICE_COLUMNS = () => {
         return [
             {
                 Header: "SL",
@@ -194,7 +100,7 @@ const Dashboard = () => {
 
 
         ];
-    };
+    }; */
 
 
     return (
@@ -239,7 +145,7 @@ const Dashboard = () => {
 
 
 
-            <div className='flex flex-col lg:flex-row items-start  gap-5 w-full rounded-md'>
+           {/*  <div className='flex flex-col lg:flex-row items-start  gap-5 w-full rounded-md'>
                 <div className='w-full bg-white p-3 text-start rounded-md' >
                     <h2 className='text-2xl font-semibold mb-4 pl-1'>Recent News</h2>
                     <div>
@@ -259,7 +165,7 @@ const Dashboard = () => {
                 </div>
 
             </div>
-
+ */}
 
 
         </div>
