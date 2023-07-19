@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { baseURL } from "../components/utilities/url";
 import { fetchBrand, fetchFAQs, fetchNews, fetchProducts, fetchTeam, fetchWork } from "./fetching";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../firebase.init";
 
 export const APPContext = createContext();
 
@@ -13,11 +14,11 @@ const CollectionContext = ({ children }) => {
 	const [isViewBlogs, setIsViewBlogs] = useState(false);
 	const [isViewTeam, setIsViewTeam] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(true);
-	const [user, setUser] = useState([]);
+	// const [user, setUser] = useState([]);
 
 
-	// const [user] = useAuthState(auth);
-	// const token = window.localStorage.getItem("token");
+	const [user] = useAuthState(auth);
+	const token = window.localStorage.getItem("token");
 
 	
 
@@ -35,18 +36,18 @@ const CollectionContext = ({ children }) => {
 	
 
 
-	useEffect(() => {
+	/* useEffect(() => {
 		const getUserStr = localStorage.getItem("user");
 		if (getUserStr) {
 			const getUser = JSON.parse(getUserStr);
 			//    console.log(getUser);
 			setUser(getUser);
 		}
-	}, []);
+	}, []); */
 
 
 
-	const value = {menuOpen,setMenuOpen,user,setUser,isViewWork,setIsViewWork,isViewProducts,setIsViewProducts,isViewBrand,setIsViewBrand,isViewFaqs,setIsViewFaqs,isViewBlogs,setIsViewBlogs,isViewTeam,setIsViewTeam,faqs,faqLoading,brands,brandLoading,products,productsLoading,news,newsLoading,team,teamLoading,work,workLoading};
+	const value = {menuOpen,setMenuOpen,user,token,  isViewWork,setIsViewWork,isViewProducts,setIsViewProducts,isViewBrand,setIsViewBrand,isViewFaqs,setIsViewFaqs,isViewBlogs,setIsViewBlogs,isViewTeam,setIsViewTeam,faqs,faqLoading,brands,brandLoading,products,productsLoading,news,newsLoading,team,teamLoading,work,workLoading};
 
 
 	return <APPContext.Provider value={value}>{children}</APPContext.Provider>;

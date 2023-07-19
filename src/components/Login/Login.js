@@ -1,108 +1,86 @@
-import React, { useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { APPContext } from '../../actions/reducers';
-import { baseURL } from '../utilities/url';
-import useUser from '../utilities/useUser';
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import auth from "../../firebase.init";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const Login = () => {
-     //confirm  validation
-    const schema = yup.object().shape({
-        email: yup
-        .string()
-        .email("* Invalid email address")
-        .required("* Email is required"),
-        password: yup.string().required("* Password is required"),
-    });
+	// const { token } = useCollection();
+	const navigate = useNavigate();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
-    const { user, setUser } = useContext(APPContext);
-    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
-    const navigate = useNavigate();
+	const [signInWithEmailAndPassword, user, loading, error] =
+		useSignInWithEmailAndPassword(auth);
 
-    //Handle Admin Login
-    const onSubmit = (data, e) => {
-        e.preventDefault();
-        // console.log(data);
+	//Error & Loading Message
+	if (error) {
+		console.log(error);
+	}
 
-        const url = `${baseURL}/api/login`;
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(result => {
-                if (result.error) {
-                    console.log(result);
-                    toast.error("Incorrect email or password");
-                } else {
-                    console.log(result);
+	if (loading) {
+		console.log("loading...");
+	}
 
-                   if(result?.role==="admin"){
-                    setUser(result.user);
-                    const token = result.token
-                    const user = JSON.stringify(result.user);
-                    window.localStorage.setItem("token", token);
-                    window.localStorage.setItem("user", user);
-                    toast.success(result.message);
-                    navigate('/admin-dashboard/dashboard');
-                   }else{
-                     toast.error("Incorrect email or password"); 
-                   }
-                }
-            })
-    };
+	const handleLogin = async (e) => {
+		e.preventDefault();
+		try {
+			const userCredential = await signInWithEmailAndPassword(email, password);
+			const user = userCredential.user;
+			const token = user.accessToken;
+			// console.log(token)
+			window.localStorage.setItem("token", token);
 
-    return (
-        <div className='bg-bgclr flex flex-col items-center justify-center h-[100vh] '>
-             <div className='bg-white  rounded-md w-96'>
-                  <div className='flex justify-center'>
-                    <img src={"/assets/Virtual BD Logo2.png"} alt="talents" className="my-4 block" />
-                  </div>
+			navigate("/admin-dashboard/dashboard");
+			toast.success("Login Success");
+		} catch (error) {
+			console.log(error, "Failed");
+			toast.error("Login Failed");
+		}
+	};
 
-                    <div className='p-5'>
-                        <h3 className='text-3xl font-bold text-primary text-center mb-3'>Login</h3>
+	return (
+		<div className="bg-bgclr flex flex-col items-center justify-center h-[100vh] ">
+			<div className="bg-white  rounded-md w-96 px-4 ">
+				<div className="flex justify-center">
+					<img src={"/assets/logo.png"} alt="talents" className="my-4 block" />
+				</div>
 
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className=' mb-3'>
-                                <input
-                                    type="email"
-                                    placeholder='Email'
-                                    className=' bg-bgclr px-3 py-1.5 w-full rounded-md outline-none'
-                                    {...register("email", { required: true })} />
+				<div className="py-10">
+					{/* <h3 className="text-3xl font-bold text-primary text-center mb-3">
+						Login
+					</h3> */}
 
-                                {errors.email && (
-                                  <p className="text-sm text-red-700">{errors.email.message}</p>
-                                     )}
-                            </div>
+					<form onSubmit={handleLogin} className="bg-white">
+						<input
+							type="email"
+							placeholder="Email"
+							onBlur={(e) => setEmail(e.target.value)}
+							className="input bg-white input-bordered input-success w-full max-w-md mb-3"
+							required
+						/>
 
-                            <div className=''>
-                                <input
-                                    type="password"
-                                    placeholder='Password'
-                                    {...register("password", { required: true })}
-                                    className=' bg-bgclr px-3 py-1.5 w-full rounded-md outline-none' />
+						<input
+							type="password"
+							placeholder="Password"
+							onBlur={(e) => setPassword(e.target.value)}
+							className="input bg-white input-bordered input-success w-full max-w-md mb-3"
+							required
+						/>
 
-                                 {errors.password && (
-                                  <p className="text-sm text-red-700">{errors.password.message}</p>
-                                     )}
-                            </div>
-
-
-
-                            <div className='flex items-center justify-center mt-3'>
-                                <button type='submit' className="px-10 font-bold py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg ">Login</button>
-                            </div>
-                        </form>
-                    </div>
-             </div>
-        </div>
-    );
+						<div className="flex items-center justify-center">
+							<button
+								type="submit"
+								className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg font-bold "
+							>
+								Login
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Login;

@@ -1,22 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { AiOutlineClose, AiOutlineLogout, AiOutlineMenu } from "react-icons/ai";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { APPContext, useCollection } from "../../actions/reducers";
+import {  useCollection } from "../../actions/reducers";
 import { sidebarMenu } from "../../AllData/staticData";
-import useToken from "../utilities/useToken";
-import useUser from "../utilities/useUser";
-import blankUser from "../../images/blank_user.png";
-import { baseURL } from "../utilities/url";
+
 
 import logo2 from "../../images/logo.png";
+import { signOut } from "firebase/auth";
+import auth from "../../firebase.init";
 
 const Header = () => {
 	const {
 		menuOpen,
 		setMenuOpen,
-		user,
-		setUser,
 		isViewWork,
 		setIsViewWork,
 		isViewProducts,
@@ -31,40 +28,16 @@ const Header = () => {
 		setIsViewTeam,
 	} = useCollection();
 
-	const [token, setToken] = useToken();
 	const location = useLocation();
 	const currentPath = location.pathname;
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
-	// const userImg=`${baseURL}/${user?.photo}`;
-
-	// const [image, setImage] = useState(userImg || blankUser);
-	const [profile, setProfile] = useState(false);
-
-	// const access_token=window.localStorage.getItem("token")
-	// const access_user=window.localStorage.getItem("user")
 
 	//Handle Logout
 	const handleLogout = () => {
-		const url = `${baseURL}/api/logout`;
-		fetch(url, {
-			method: "POST",
-			headers: {
-				"content-type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((res) => res.json())
-			.then((result) => {
-				console.log(result);
-				setUser("");
-				setOpen(false);
-				window.localStorage.removeItem("token");
-				window.localStorage.removeItem("user");
-				navigate("/sign-in");
-			});
+		signOut(auth);
+		window.localStorage.removeItem("token");
 	};
-	// console.log(user)
 
 	return (
 		<>
@@ -466,7 +439,7 @@ const Header = () => {
 
 								<li
 									className="w-full hover:text-blue hover:bg-white  px-5 py-2 rounded-sm cursor-pointer"
-									onClick={handleLogout}
+									onClick={() => handleLogout()}
 								>
 									<div className="flex items-center justify-start">
 										<AiOutlineLogout /> <span className="ml-2"> Logout</span>

@@ -12,7 +12,7 @@ const TeamDetails = () => {
 			.then((data) => setSinMember(data));
 	}, [id]);
 
-	console.log(sinMember);
+	// console.log(sinMember);
 
 	return (
 		<div className="bg-white p-4 mx-2 lg:mx-8 my-5 rounded-md text-primary">
@@ -32,7 +32,6 @@ const TeamDetails = () => {
 							<span className="font-bold">Designation: </span>
 							{sinMember?.memberDesi}
 						</p>
-						
 
 						<div className="text-start">
 							<h3 className="font-bold">Description:</h3>

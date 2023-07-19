@@ -143,9 +143,6 @@ const AddWork = () => {
 	);
 };
 
-
-
-
 const ViewWork = () => {
 	const { work, workLoading } = useCollection();
 	const navigate = useNavigate();

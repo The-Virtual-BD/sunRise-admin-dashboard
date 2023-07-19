@@ -1,16 +1,15 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useCollection } from '../../actions/reducers';
 
 
 const RequireAuth = ({ children }) => {
-    const getToken = window.localStorage.getItem("token");
-    // console.log(getToken);
+    const {user,token,}=useCollection();
 
     const location = useLocation();
-    /*  if (loading) {
-         return <p>Loading....</p>
-     } */
-    if (!getToken) {
+   
+
+    if (!token) {
         return <Navigate to="/sign-in" state={{ from: location }} replace />;
     }
     return children;

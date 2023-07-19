@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
 import "suneditor/dist/css/suneditor.min.css";
-import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+import {  QueryClient, QueryClientProvider } from "react-query";
 
 import RequireAuth from "./components/utilities/RequireAuth";
 
@@ -13,7 +13,6 @@ import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Faqs from "./components/SunRiseDashboard/Faqs/Faqs";
 import Login from "./components/Login/Login";
-import Profile from "./components/Profile/Profile";
 import Blogs from "./components/Dashboard/BlogPages/Blogs";
 import BlogDetails from "./components/Dashboard/BlogPages/BlogDetails";
 import Brands from "./components/SunRiseDashboard/Brands";
@@ -29,6 +28,7 @@ import OurWorkDetails from "./components/SunRiseDashboard/Work/OurWorkDetails";
 const queryClient = new QueryClient();
 
 function App() {
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<CollectionContext>
@@ -46,8 +46,9 @@ function App() {
 					<Route
 						path="/admin-dashboard"
 						element={
-						
+							<RequireAuth>
 								<AdminDashboard />
+							</RequireAuth>
 						}
 					>
 						<Route
@@ -92,18 +93,12 @@ function App() {
 						></Route>
 
 						<Route path="/admin-dashboard/teams" element={<Teams />}></Route>
-						<Route path="/admin-dashboard/teams/:id" element={<TeamDetails />}></Route>
+						<Route
+							path="/admin-dashboard/teams/:id"
+							element={<TeamDetails />}
+						></Route>
 					</Route>
 
-					<Route
-						path="/profile"
-						element={
-							<RequireAuth>
-								{" "}
-								<Profile />
-							</RequireAuth>
-						}
-					></Route>
 					<Route path="/sign-in" element={<Login />}></Route>
 				</Routes>
 

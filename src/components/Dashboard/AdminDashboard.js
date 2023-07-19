@@ -4,12 +4,19 @@ import { APPContext } from "../../actions/reducers";
 import { sidebarMenu } from "../../AllData/staticData";
 import Header from "../SharedPage/Header";
 import { AiOutlineLogout } from "react-icons/ai";
+import { signOut } from "firebase/auth";
+import auth from "../../firebase.init";
 
 const AdminDashboard = () => {
 	const location = useLocation();
 	const isActive = location.pathname;
 	// console.log(location.pathname);
 	const { menuOpen } = useContext(APPContext);
+
+	const handleLogout = () => {
+		signOut(auth);
+		window.localStorage.removeItem("token");
+	};
 
 	return (
 		<>
@@ -57,11 +64,11 @@ const AdminDashboard = () => {
 
 						<li
 							className="w-full hover:bg-blue hover:text-white  px-5 py-2 rounded-sm cursor-pointer"
-							// onClick={handleLogout}
+							onClick={() => handleLogout()}
 						>
-							<div className="flex items-center justify-start">
+							<button className="flex items-center justify-start">
 								<AiOutlineLogout /> <span className="ml-2"> Logout</span>
-							</div>
+							</button>
 						</li>
 					</ul>
 				</div>

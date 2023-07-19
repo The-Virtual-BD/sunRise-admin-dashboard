@@ -7,20 +7,21 @@ import { baseURL } from '../utilities/url';
 import useToken from '../utilities/useToken';
 import { FiDownload } from 'react-icons/fi';
 import SmallTable from '../SharedPage/SmallTable';
-import { BsEyeFill } from 'react-icons/bs';
+import { BsEyeFill, BsFileTextFill } from 'react-icons/bs';
+import { useCollection } from '../../actions/reducers';
+import { SiWheniwork } from 'react-icons/si';
+import { GiDeliveryDrone } from 'react-icons/gi';
 
 
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [token] = useToken();
-    const [totalUser, setTotalUser] = useState([]);
-    const [totalBlogReq, setTotalBlogReq] = useState([]);
-    const [totalSubReq, setTotalSubReq] = useState([]);
-    const [notices, setNotices] = useState([]);
-    const [blogs, setBlogs] = useState([]);
+   const {products,productsLoading,news,newsLoading,work,workLoading}=useCollection();
+   
     
-
+if(productsLoading || newsLoading || workLoading){
+    return <p>Loading...</p>
+};
    
 
     
@@ -110,30 +111,30 @@ const Dashboard = () => {
                 <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
                     <div className='text-start'>
                         <h2 className='text-xl font-semibold '>Total Works</h2>
-                        <p>5</p>
+                        <p>{work?.length}</p>
                     </div>
                     <div>
-                        <RiUser3Fill className='text-3xl font-bold text-blue' />
+                        <SiWheniwork className='text-3xl font-bold text-blue' />
                     </div>
                 </div>
 
                 <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
                     <div className='text-start'>
                         <h2 className='text-xl font-semibold '>Total Products</h2>
-                        <p>12</p>
+                        <p>{products?.length}</p>
                     </div>
                     <div>
-                        <FaUserCheck className='text-3xl font-bold text-blue' />
+                        <GiDeliveryDrone className='text-3xl font-bold text-blue' />
                     </div>
                 </div>
 
                 <div className='flex items-center justify-between gap-5 bg-white  p-5 round w-full rounded-md'>
                     <div className='text-start'>
                         <h2 className='text-xl font-semibold '>Total News</h2>
-                        <p>10</p>
+                        <p>{news?.length}</p>
                     </div>
                     <div>
-                        <CgPlayListCheck className='text-3xl font-bold text-blue' />
+                        <BsFileTextFill className='text-3xl font-bold text-blue' />
                     </div>
                 </div>
             </div>
