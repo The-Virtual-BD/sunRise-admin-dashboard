@@ -21,10 +21,12 @@ export default Brands;
 const AddBrand = () => {
 	const [name, setName] = useState("");
 	const [img, setImg] = useState(null);
+	const [submitting, setSubmitting] = useState(false);
 
 	//Handle Add Brand Form
 	const handleBrandAddForm = (e) => {
 		e.preventDefault();
+		setSubmitting(true);
 
 		try {
 			const brandForm = new FormData();
@@ -38,11 +40,13 @@ const AddBrand = () => {
 					console.log(res);
 					toast.success("Brand Added Successfully");
 					e.target.reset();
+					setSubmitting(false);
 				})
 				.catch((error) => console.log(error));
 		} catch (error) {
 			console.log(error);
 			toast.error("Brand Added Failed");
+			setSubmitting(false);
 		}
 	};
 
@@ -77,10 +81,11 @@ const AddBrand = () => {
 						</div>
 
 						<button
+							disabled={submitting}
 							type="submit"
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Add
+							{submitting ? "Adding..." : "Add"}
 						</button>
 					</form>
 				</div>

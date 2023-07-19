@@ -21,18 +21,17 @@ const Teams = () => {
 
 export default Teams;
 
-
-
-
 const AddTeam = () => {
 	const [memberName, setMemberName] = useState("");
 	const [memberDesi, setMemberDesi] = useState("");
 	const [memberImg, setMemberImg] = useState(null);
 	const [memberDesc, setMemberDesc] = useState("");
+	const [submitting, setSubmitting] = useState(false);
 
 	//Handle News Add Form
 	const handleTeamForm = (e) => {
 		e.preventDefault();
+		setSubmitting(true);
 
 		try {
 			const memberForm = new FormData();
@@ -48,11 +47,13 @@ const AddTeam = () => {
 					console.log(res);
 					toast.success("Member Added Successfully");
 					e.target.reset();
+					setSubmitting(false);
 				})
 				.catch((error) => console.log(error));
 		} catch (error) {
 			console.log(error);
 			toast.error("Member Added Failed");
+			setSubmitting(false);
 		}
 	};
 
@@ -71,7 +72,7 @@ const AddTeam = () => {
 								<input
 									type="text"
 									placeholder="Name"
-									onChange={(e)=>setMemberName(e.target.value)}
+									onChange={(e) => setMemberName(e.target.value)}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -81,7 +82,7 @@ const AddTeam = () => {
 								<input
 									type="text"
 									placeholder="Designation"
-									onChange={(e)=>setMemberDesi(e.target.value)}
+									onChange={(e) => setMemberDesi(e.target.value)}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -91,7 +92,7 @@ const AddTeam = () => {
 						<div className="form-control w-full  ">
 							<input
 								type="file"
-								onChange={(e)=>setMemberImg(e.target.files[0])}
+								onChange={(e) => setMemberImg(e.target.files[0])}
 								required
 								className="file-input  w-full bg-bgclr"
 							/>
@@ -132,10 +133,11 @@ const AddTeam = () => {
 						</div>
 
 						<button
+							disabled={submitting}
 							type="submit"
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Add
+							{submitting ? "Adding..." : "Add"}
 						</button>
 					</form>
 				</div>
@@ -144,17 +146,13 @@ const AddTeam = () => {
 	);
 };
 
-
-
-
-
 const ViewTeam = () => {
-	const { team,teamLoading } = useCollection();
+	const { team, teamLoading } = useCollection();
 	const navigate = useNavigate();
 
 	if (teamLoading) {
 		return <p>Loading....</p>;
-	};
+	}
 
 	const allTeam = [...team]?.reverse() || "";
 
@@ -243,9 +241,12 @@ const ViewTeam = () => {
 	return (
 		<div className="text-primary p-3">
 			{team.length && (
-				<Table columns={BLOG_COLUMNS()} data={allTeam} headline={"Team Members"} />
+				<Table
+					columns={BLOG_COLUMNS()}
+					data={allTeam}
+					headline={"Team Members"}
+				/>
 			)}
 		</div>
 	);
 };
-

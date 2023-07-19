@@ -125,10 +125,12 @@ const AddBlogs = () => {
 	const [newsCategory, setNewsCategory] = useState("");
 	const [newsImg, setNewsImg] = useState(null);
 	const [newsDesc, setNewsDesc] = useState("");
+	const [submitting, setSubmitting] = useState(false);
 
 	//Handle News Add Form
 	const handleNewsForm = (e) => {
 		e.preventDefault();
+		setSubmitting(true);
 
 		try {
 			const newsForm = new FormData();
@@ -144,11 +146,13 @@ const AddBlogs = () => {
 					console.log(res);
 					toast.success("News Added Successfully");
 					e.target.reset();
+					setSubmitting(false);
 				})
 				.catch((error) => console.log(error));
 		} catch (error) {
 			console.log(error);
 			toast.error("News Added Failed");
+			setSubmitting(false);
 		}
 	};
 
@@ -231,7 +235,8 @@ const AddBlogs = () => {
 							type="submit"
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Submit
+							{submitting ? "Submitting..." : "Submit"}
+							
 						</button>
 					</form>
 				</div>

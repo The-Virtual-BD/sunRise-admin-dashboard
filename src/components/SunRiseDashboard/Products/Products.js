@@ -27,9 +27,12 @@ const AddProduct = () => {
 	const [proImg, setProImg] = useState(null);
 	const [proDesc, setProDesc] = useState("");
 
+	const [submitting, setSubmitting] = useState(false);
+
 	//Handle Product Add Form
 	const handleProductForm = (e) => {
 		e.preventDefault();
+		setSubmitting(true);
 
 		try {
 			const productForm = new FormData();
@@ -45,13 +48,17 @@ const AddProduct = () => {
 					console.log(res);
 					toast.success("Products Added Successfully");
 					e.target.reset();
+					setSubmitting(false);
 				})
 				.catch((error) => console.log(error));
 		} catch (error) {
 			console.log(error);
 			toast.error("Products Added Failed");
+			setSubmitting(false);
 		}
 	};
+
+	console.log(submitting);
 
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
@@ -129,10 +136,11 @@ const AddProduct = () => {
 						</div>
 
 						<button
+							disabled={submitting}
 							type="submit"
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Add
+							{submitting ? "Adding..." : "Add"}
 						</button>
 					</form>
 				</div>

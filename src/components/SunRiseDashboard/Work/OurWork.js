@@ -28,10 +28,12 @@ const AddWork = () => {
 	const [workCategory, setWorkCategory] = useState("");
 	const [workImg, setWorkImg] = useState(null);
 	const [workDesc, setWorkDesc] = useState("");
+	const [submitting, setSubmitting] = useState(false);
 
 	//Handle work Add Form
 	const handleWorkForm = (e) => {
 		e.preventDefault();
+		setSubmitting(true);
 
 		try {
 			const workForm = new FormData();
@@ -47,11 +49,13 @@ const AddWork = () => {
 					console.log(res);
 					toast.success("Work Added Successfully");
 					e.target.reset();
+					setSubmitting(false);
 				})
 				.catch((error) => console.log(error));
 		} catch (error) {
 			console.log(error);
 			toast.error("Work Added Failed");
+			setSubmitting(false);
 		}
 	};
 
@@ -131,10 +135,11 @@ const AddWork = () => {
 						</div>
 
 						<button
+							disabled={submitting}
 							type="submit"
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Add
+							{submitting ? "Adding..." : "Add"}
 						</button>
 					</form>
 				</div>

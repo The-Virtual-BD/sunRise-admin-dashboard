@@ -7,6 +7,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Faqs = () => {
 	const { isViewFaqs } = useCollection();
@@ -27,18 +28,25 @@ const AddFaq = () => {
 		formState: { errors },
 	} = useForm();
 
+	const [submitting, setSubmitting] = useState(false);
+
 	//Handle Form data
 	const onSubmit = (data) => {
+		setSubmitting(true);
 		try {
 			// console.log(data);
 			const url = `${baseURL}/faqs/create`;
 			axios
 				.post(url, data)
-				.then((res) => console.log(res))
+				.then((res) => {
+					console.log(res);
+					setSubmitting(false);
+				})
 				.catch((error) => console.log(error));
 			reset();
 		} catch (error) {
 			console.log("Data Post Failed", error);
+			setSubmitting(false);
 		}
 	};
 
@@ -72,10 +80,11 @@ const AddFaq = () => {
 						</div>
 
 						<button
+							disabled={submitting}
 							type="submit"
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Add
+							{submitting ? "Adding..." : "Add"}
 						</button>
 					</form>
 				</div>
@@ -91,6 +100,8 @@ const ViewFaqs = () => {
 	if (faqLoading) {
 		return <p>Loading...</p>;
 	}
+
+	const sortFaq = [...faqs]?.reverse();
 
 	//Handle Delete Btn
 	const handleDeleteBtn = (id) => {
@@ -116,7 +127,7 @@ const ViewFaqs = () => {
 
 	return (
 		<div className="text-primary p-3">
-			{faqs.map((faqs) => (
+			{sortFaq.map((faqs) => (
 				<div key={faqs._id} className="flex items-center gap-5 ">
 					<div className="collapse collapse-arrow bg-white mb-3">
 						<input type="checkbox" name="my-accordion-2" />
