@@ -1,50 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BsCheck2, BsEyeFill } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Table from "../../SharedPage/Table";
-import Loading from "../../utilities/Loading";
 import { baseURL } from "../../utilities/url";
-import useToken from "../../utilities/useToken";
 import { useCollection } from "../../../actions/reducers";
 import SunEditor from "suneditor-react";
-import { useForm } from "react-hook-form";
+import axios from "axios";
+
+
+
 
 const Blogs = () => {
 	const { isViewBlogs } = useCollection();
 	return <div>{isViewBlogs ? <AddBlogs /> : <ViewBlogs />}</div>;
 };
 
+
+
+
+
 const ViewBlogs = () => {
-	const [token] = useToken();
-	const [blogs, setBlogs] = useState([]);
+	const { news, newsLoading } = useCollection();
 	const navigate = useNavigate();
-	const allBlogs = [...blogs].reverse();
-	const [isLoading, setIsLoading] = useState(false);
 
-	//Handle Get posts
-	useEffect(() => {
-		const sUrl = `${baseURL}/api/admin/posts`;
-		setIsLoading(true);
+	if (newsLoading) {
+		return <p>Loading....</p>;
+	}
 
-		fetch(sUrl, {
-			method: "GET",
-			headers: {
-				"content-type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				console.log(data);
-				setIsLoading(false);
-				setBlogs(data.data);
-			});
-	}, [token]);
+	const allBlogs = [...news]?.reverse() || "";
 
 	const handleBlogView = (id) => {
-		console.log("clicked", id);
+		// console.log("clicked", id);
 		navigate(`/admin-dashboard/news/${id}`);
 	};
 
@@ -53,19 +41,15 @@ const ViewBlogs = () => {
 		const procced = window.confirm("You Want To Delete?");
 
 		if (procced) {
-			const userUrl = `${baseURL}/api/admin/posts/destroy/${id}`;
-			fetch(userUrl, {
-				method: "DELETE",
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					console.log(data);
-					const remaining = blogs.filter((card) => card.id !== id);
-					setBlogs(remaining);
-					toast.success(data.message);
+			axios
+				.delete(`${baseURL}/news/${id}`)
+				.then((response) => {
+					// console.log(`Deleted post with ID ${id}`);
+					toast.success("Deleted successfully!");
+				})
+				.catch((error) => {
+					console.error(error);
+					toast.error("Deleted Failed!");
 				});
 		}
 	};
@@ -80,81 +64,37 @@ const ViewBlogs = () => {
 				accessor: (_row, i) => i + 1,
 			},
 			{
-				Header: "Blogger Name",
-				accessor: "author.first_name",
+				Header: "Title",
+				accessor: "newsTitle",
 				sortType: "basic",
 				Cell: ({ row }) => {
-					console.log(row);
-					const { id, first_name } = row.original.author;
-					return (
-						<>
-							<Link to={`/admin-dashboard/user-managment/${id}`}>
-								{first_name}
-							</Link>
-						</>
-					);
-				},
-			},
-			{
-				Header: "Blog Title",
-				accessor: "title",
-				sortType: "basic",
-				Cell: ({ row }) => {
-					const { title } = row.original;
+					const { newsTitle } = row.original;
 					return (
 						<div className="flex items-center justify-center  gap-2 ">
-							{title.slice(0, 40)}
+							{newsTitle?.slice(0, 40)}
 						</div>
 					);
 				},
 			},
 			{
-				Header: "Category Name",
-				accessor: "category.name",
+				Header: "Category",
+				accessor: "newsCategory",
 				sortType: "basic",
 			},
-			{
-				Header: "Status",
-				accessor: "status",
-				sortType: "basic",
-				Cell: ({ row }) => {
-					const { status } = row.original;
-					console.log(status);
-					return (
-						<div className="flex items-center justify-center  gap-2 text-sm">
-							{status == "2" ? (
-								<p className="bg-white px-2 py-[2px] rounded-full border border-green-500 text-xs text-green-500">
-									{" "}
-									Approved
-								</p>
-							) : status == "3" ? (
-								<p className="bg-white  px-2 py-[2px] rounded-full border text-xs  border-red-500  text-red-500">
-									Declined
-								</p>
-							) : (
-								<p className="bg-white  px-2 py-[2px] rounded-full border text-xs  border-yellow-500  text-yellow-500">
-									Pending
-								</p>
-							)}
-						</div>
-					);
-				},
-			},
-
 			{
 				Header: "Action",
 				accessor: "action",
 				Cell: ({ row }) => {
-					const { id } = row.original;
+					const { _id } = row.original;
 					return (
 						<div className="flex items-center justify-center  gap-2 ">
-							<button onClick={() => handleBlogView(id)}>
+							<button onClick={() => handleBlogView(_id)}>
 								<div className="w-8 h-8 rounded-md bg-[#00A388] text-white grid items-center justify-center">
 									<BsEyeFill className="text-lg " />
 								</div>
 							</button>
 
-							<button onClick={() => handleDeletePost(id)}>
+							<button onClick={() => handleDeletePost(_id)}>
 								<div className="w-8 h-8 rounded-md bg-[#FF0000] text-white grid items-center justify-center">
 									<AiFillDelete className="text-lg  text-white" />
 								</div>
@@ -166,37 +106,50 @@ const ViewBlogs = () => {
 		];
 	};
 
-	if (isLoading) {
-		return <Loading />;
-	}
-
 	return (
 		<div className="text-primary p-3">
-			{blogs.length && (
-				<Table
-					columns={BLOG_COLUMNS()}
-					data={allBlogs}
-					headline={"All Blogs"}
-				/>
+			{news.length && (
+				<Table columns={BLOG_COLUMNS()} data={allBlogs} headline={"All News"} />
 			)}
 		</div>
 	);
 };
 
-const AddBlogs = () => {
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm();
-	const [description, setDescription] = useState("");
 
-	//Handle Form
-	const onSubmit = (data) => {
-		data.newsDesc = description;
-		console.log(data);
-		reset();
+
+
+
+
+const AddBlogs = () => {
+	const [newsTitle, setNewsTitle] = useState("");
+	const [newsCategory, setNewsCategory] = useState("");
+	const [newsImg, setNewsImg] = useState(null);
+	const [newsDesc, setNewsDesc] = useState("");
+
+	//Handle News Add Form
+	const handleNewsForm = (e) => {
+		e.preventDefault();
+
+		try {
+			const newsForm = new FormData();
+			newsForm.append("newsTitle", newsTitle);
+			newsForm.append("newsCategory", newsCategory);
+			newsForm.append("newsImg", newsImg);
+			newsForm.append("newsDesc", newsDesc);
+
+			const url = `${baseURL}/news/create`;
+			axios
+				.post(url, newsForm)
+				.then((res) => {
+					console.log(res);
+					toast.success("News Added Successfully");
+					e.target.reset();
+				})
+				.catch((error) => console.log(error));
+		} catch (error) {
+			console.log(error);
+			toast.error("News Added Failed");
+		}
 	};
 
 	return (
@@ -206,7 +159,7 @@ const AddBlogs = () => {
 					<h3 className="px-3 text-2xl font-bold text-center">Add News</h3>
 
 					<form
-						onSubmit={handleSubmit(onSubmit)}
+						onSubmit={handleNewsForm}
 						className="p-3 flex flex-col items-center justify-center mt-10 gap-4 w-full"
 					>
 						<div className="flex flex-col lg:flex-row items-center gap-3 w-full">
@@ -214,7 +167,7 @@ const AddBlogs = () => {
 								<input
 									type="text"
 									placeholder="Title"
-									{...register("newsTitle", { required: true })}
+									onChange={(e) => setNewsTitle(e.target.value)}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -224,7 +177,7 @@ const AddBlogs = () => {
 								<input
 									type="text"
 									placeholder="Category"
-									{...register("newsCategory", { required: true })}
+									onChange={(e) => setNewsCategory(e.target.value)}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
@@ -234,7 +187,7 @@ const AddBlogs = () => {
 						<div className="form-control w-full  ">
 							<input
 								type="file"
-								{...register("newsImg", { required: true })}
+								onChange={(e) => setNewsImg(e.target.files[0])}
 								required
 								className="file-input  w-full bg-bgclr"
 							/>
@@ -267,7 +220,7 @@ const AddBlogs = () => {
 								placeholder="Enter Description..."
 								autoFocus={true}
 								onChange={(content) => {
-									setDescription(content);
+									setNewsDesc(content);
 								}}
 								required
 								setDefaultStyle="font-family: 'Open Sans', sans-serif; font-size: 14px; text-align:start; min-height:200px; background:#ECF0F1"
@@ -278,7 +231,7 @@ const AddBlogs = () => {
 							type="submit"
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Add
+							Submit
 						</button>
 					</form>
 				</div>

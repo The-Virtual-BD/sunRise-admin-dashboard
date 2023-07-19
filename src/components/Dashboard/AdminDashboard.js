@@ -15,7 +15,7 @@ const AdminDashboard = () => {
 		<>
 			<Header />
 			<div className="flex flex-row-reverse justify-between  bg-bgclr">
-				<div className="text-center w-full  bg-bgclr">
+				<div className="text-center w-full  bg-bgclr min-h-screen">
 					<Outlet></Outlet>
 				</div>
 

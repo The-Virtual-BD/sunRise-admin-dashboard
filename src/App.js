@@ -23,6 +23,7 @@ import Teams from "./components/SunRiseDashboard/Team/Teams";
 import FaqsEdit from "./components/SunRiseDashboard/Faqs/FaqsEdit";
 import ProductsEdit from "./components/SunRiseDashboard/Products/ProductsEdit";
 import ProductDetails from "./components/SunRiseDashboard/Products/ProductDetails";
+import TeamDetails from "./components/SunRiseDashboard/Team/TeamDetails";
 
 const queryClient = new QueryClient();
 
@@ -86,6 +87,7 @@ function App() {
 						></Route>
 
 						<Route path="/admin-dashboard/teams" element={<Teams />}></Route>
+						<Route path="/admin-dashboard/teams/:id" element={<TeamDetails />}></Route>
 					</Route>
 
 					<Route

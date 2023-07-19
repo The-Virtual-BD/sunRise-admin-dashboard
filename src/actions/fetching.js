@@ -20,3 +20,26 @@ export const fetchProducts = async () => {
     const data = await res.json();
     return data?.data;
 };
+
+//Fetch News
+export const fetchNews = async () => {
+    const res = await fetch(`${baseURL}/news/all`);
+    const data = await res.json();
+    return data?.data;
+};
+
+
+//Fetch Teams
+export const fetchTeam = async () => {
+    const res = await fetch(`${baseURL}/team/all`);
+    const data = await res.json();
+    return data?.data;
+};
+
+
+//Fetch Work
+export const fetchWork = async () => {
+    const res = await fetch(`${baseURL}/work/all`);
+    const data = await res.json();
+    return data?.data;
+};

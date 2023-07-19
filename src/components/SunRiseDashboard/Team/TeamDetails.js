@@ -2,24 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { baseURL } from "../../utilities/url";
 
-const ProductDetails = () => {
+const TeamDetails = () => {
 	const { id } = useParams();
-	const [sinPro, setSinPro] = useState({});
+	const [sinMember, setSinMember] = useState({});
 
 	useEffect(() => {
-		fetch(`${baseURL}/products/${id}`)
+		fetch(`${baseURL}/team/${id}`)
 			.then((res) => res.json())
-			.then((data) => setSinPro(data));
+			.then((data) => setSinMember(data));
 	}, [id]);
 
-	// console.log(sinPro);
+	console.log(sinMember);
 
 	return (
 		<div className="bg-white p-4 mx-2 lg:mx-8 my-5 rounded-md text-primary">
 			<div>
-				<h2 className="text-2xl font-bold text-start my-3 px-4">
-					View Product
-				</h2>
+				<h2 className="text-2xl font-bold text-start my-3 px-4">View Member</h2>
 				<hr className=" text-bgclr" />
 			</div>
 
@@ -28,18 +26,19 @@ const ProductDetails = () => {
 					<div className="flex flex-col items-start gap-3">
 						<h3 className="text-start">
 							<span className="font-bold">Name:</span>
-							{sinPro?.proName}
+							{sinMember?.memberName}
 						</h3>
 						<p>
-							<span className="font-bold">Category: </span>
-							{sinPro?.proCategory}
+							<span className="font-bold">Designation: </span>
+							{sinMember?.memberDesi}
 						</p>
+						
 
 						<div className="text-start">
 							<h3 className="font-bold">Description:</h3>
 							<div
 								className="text-labelclr"
-								dangerouslySetInnerHTML={{ __html: sinPro?.proDesc }}
+								dangerouslySetInnerHTML={{ __html: sinMember?.memberDesc }}
 							/>
 						</div>
 					</div>
@@ -47,8 +46,8 @@ const ProductDetails = () => {
 
 				<div className="w-full lg:w-1/2">
 					<img
-						src={`${baseURL}/${sinPro?.proImg}`}
-						alt={sinPro?.proName}
+						src={`${baseURL}/${sinMember?.memberImg}`}
+						alt={sinMember?.memberName}
 						srcSet=""
 						className="h-full lg:h-[500px]"
 					/>
@@ -58,4 +57,4 @@ const ProductDetails = () => {
 	);
 };
 
-export default ProductDetails;
+export default TeamDetails;
