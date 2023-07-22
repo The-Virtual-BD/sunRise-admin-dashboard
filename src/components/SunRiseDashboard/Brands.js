@@ -98,7 +98,11 @@ const ViewBrand = () => {
 	const { brands, brandLoading } = useCollection();
 	if (brandLoading) {
 		return <p>Loading...</p>;
-	}
+	};
+	
+	if (!brandLoading && brands.length === 0) {
+		return <p className="text-center text-lg">No Brands Available</p>;
+	};
 
 	// console.log(brands);
 

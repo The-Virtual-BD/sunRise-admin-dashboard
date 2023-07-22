@@ -152,7 +152,11 @@ const ViewTeam = () => {
 
 	if (teamLoading) {
 		return <p>Loading....</p>;
-	}
+	};
+	
+	if (!teamLoading && team.length === 0) {
+		return <p className="text-center text-lg">No Member Available</p>;
+	};
 
 	const allTeam = [...team]?.reverse() || "";
 

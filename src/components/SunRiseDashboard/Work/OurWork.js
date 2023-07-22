@@ -58,6 +58,7 @@ const AddWork = () => {
 			setSubmitting(false);
 		}
 	};
+	
 
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
@@ -154,7 +155,11 @@ const ViewWork = () => {
 
 	if (workLoading) {
 		return <p>Loading...</p>;
-	}
+	};
+	
+	if (!workLoading && work.length === 0) {
+		return <p className="text-center text-lg">No Work Available</p>;
+	};
 	const sortWork = [...work].reverse();
 
 	const handleProductView = (id) => {

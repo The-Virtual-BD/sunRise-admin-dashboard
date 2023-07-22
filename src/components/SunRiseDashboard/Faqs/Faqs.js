@@ -99,7 +99,11 @@ const ViewFaqs = () => {
 
 	if (faqLoading) {
 		return <p>Loading...</p>;
-	}
+	};
+	
+	if (!faqLoading && faqs.length === 0) {
+		return <p className="text-center text-lg">No Faqs Available</p>;
+	};
 
 	const sortFaq = [...faqs]?.reverse();
 

@@ -155,7 +155,11 @@ const ViewProducts = () => {
 
 	if (productsLoading) {
 		return <p>Loading...</p>;
-	}
+	};
+
+	if (!productsLoading && products.length === 0) {
+		return <p className="text-center text-lg">No Product Available</p>;
+	};
 	const sortProducts = [...products].reverse();
 
 	const handleProductView = (id) => {

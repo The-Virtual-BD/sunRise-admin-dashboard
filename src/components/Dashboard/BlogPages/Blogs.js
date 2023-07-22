@@ -27,7 +27,11 @@ const ViewBlogs = () => {
 
 	if (newsLoading) {
 		return <p>Loading....</p>;
-	}
+	};
+	
+	if (!newsLoading && news.length === 0) {
+		return <p className="text-center text-lg">No News Available</p>;
+	};
 
 	const allBlogs = [...news]?.reverse() || "";
 
