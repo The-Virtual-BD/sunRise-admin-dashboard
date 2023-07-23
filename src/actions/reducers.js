@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useQuery } from "react-query";
-import { fetchBrand, fetchFAQs, fetchNews, fetchProducts, fetchTeam, fetchWork } from "./fetching";
+import { fetchBrand, fetchFAQs, fetchMsg, fetchNews, fetchProducts, fetchTeam, fetchWork } from "./fetching";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 
@@ -24,8 +24,9 @@ const CollectionContext = ({ children }) => {
 	const { data: news, isLoading: newsLoading } = useQuery("news",fetchNews);
 	const { data: team, isLoading: teamLoading } = useQuery("team",fetchTeam);
 	const { data: work, isLoading: workLoading } = useQuery("work",fetchWork);
+	const { data: message, isLoading: messageLoading } = useQuery("Message",fetchMsg);
 
-	const value = {menuOpen,setMenuOpen,user,token,  isViewWork,setIsViewWork,isViewProducts,setIsViewProducts,isViewBrand,setIsViewBrand,isViewFaqs,setIsViewFaqs,isViewBlogs,setIsViewBlogs,isViewTeam,setIsViewTeam,faqs,faqLoading,brands,brandLoading,products,productsLoading,news,newsLoading,team,teamLoading,work,workLoading};
+	const value = {menuOpen,setMenuOpen,user,token,  isViewWork,setIsViewWork,isViewProducts,setIsViewProducts,isViewBrand,setIsViewBrand,isViewFaqs,setIsViewFaqs,isViewBlogs,setIsViewBlogs,isViewTeam,setIsViewTeam,faqs,faqLoading,brands,brandLoading,products,productsLoading,news,newsLoading,team,teamLoading,work,workLoading,message,messageLoading};
 
 	return <APPContext.Provider value={value}>{children}</APPContext.Provider>;
 };

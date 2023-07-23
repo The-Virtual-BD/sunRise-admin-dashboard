@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Table from "../../SharedPage/Table";
 import { BsEyeFill } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
 
 const Products = () => {
@@ -22,6 +22,7 @@ const Products = () => {
 export default Products;
 
 const AddProduct = () => {
+	const location = useLocation();
 	const [proName, setProName] = useState("");
 	const [proCategory, setProCategory] = useState("");
 	const [proImg, setProImg] = useState(null);
@@ -55,10 +56,12 @@ const AddProduct = () => {
 			console.log(error);
 			toast.error("Products Added Failed");
 			setSubmitting(false);
-		}
+		};
+
+		location.reload();
 	};
 
-	console.log(submitting);
+	// console.log(submitting);
 
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
@@ -152,6 +155,7 @@ const AddProduct = () => {
 const ViewProducts = () => {
 	const { products, productsLoading } = useCollection();
 	const navigate = useNavigate();
+	const location=useLocation();
 
 	if (productsLoading) {
 		return <p>Loading...</p>;
@@ -185,7 +189,8 @@ const ViewProducts = () => {
 					// console.error(error);
 					toast.error("Deleted Failed!");
 				});
-		}
+		};
+		location.reload();
 	};
 
 	const PRODUCTS_COLUMNS = () => {

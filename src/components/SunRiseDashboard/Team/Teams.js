@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Table from "../../SharedPage/Table";
 import { BsEyeFill } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Teams = () => {
 	const { isViewTeam } = useCollection();
@@ -22,6 +22,7 @@ const Teams = () => {
 export default Teams;
 
 const AddTeam = () => {
+	const location = useLocation();
 	const [memberName, setMemberName] = useState("");
 	const [memberDesi, setMemberDesi] = useState("");
 	const [memberImg, setMemberImg] = useState(null);
@@ -54,7 +55,9 @@ const AddTeam = () => {
 			console.log(error);
 			toast.error("Member Added Failed");
 			setSubmitting(false);
-		}
+		};
+
+		location.reload();
 	};
 
 	return (
@@ -149,6 +152,7 @@ const AddTeam = () => {
 const ViewTeam = () => {
 	const { team, teamLoading } = useCollection();
 	const navigate = useNavigate();
+	const location=useLocation();
 
 	if (teamLoading) {
 		return <p>Loading....</p>;
@@ -180,6 +184,7 @@ const ViewTeam = () => {
 					toast.error("Deleted Failed!");
 				});
 		}
+		location.reload();
 	};
 
 	// console.log(allBlogs)

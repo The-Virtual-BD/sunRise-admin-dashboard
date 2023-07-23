@@ -24,6 +24,8 @@ import ProductsEdit from "./components/SunRiseDashboard/Products/ProductsEdit";
 import ProductDetails from "./components/SunRiseDashboard/Products/ProductDetails";
 import TeamDetails from "./components/SunRiseDashboard/Team/TeamDetails";
 import OurWorkDetails from "./components/SunRiseDashboard/Work/OurWorkDetails";
+import Message from "./components/SunRiseDashboard/msg/Message";
+import MessageDetails from "./components/SunRiseDashboard/msg/MessageDetails";
 
 const queryClient = new QueryClient();
 
@@ -96,6 +98,13 @@ function App() {
 						<Route
 							path="/admin-dashboard/teams/:id"
 							element={<TeamDetails />}
+						></Route>
+
+
+						<Route path="/admin-dashboard/message" element={<Message />}></Route>
+						<Route
+							path="/admin-dashboard/message/:id"
+							element={<MessageDetails />}
 						></Route>
 					</Route>
 

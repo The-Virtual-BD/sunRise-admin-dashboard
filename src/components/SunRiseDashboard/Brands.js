@@ -6,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
 
 const Brands = () => {
 	const { isViewBrand } = useCollection();
@@ -19,6 +20,7 @@ const Brands = () => {
 export default Brands;
 
 const AddBrand = () => {
+	const location = useLocation();
 	const [name, setName] = useState("");
 	const [img, setImg] = useState(null);
 	const [submitting, setSubmitting] = useState(false);
@@ -47,7 +49,9 @@ const AddBrand = () => {
 			console.log(error);
 			toast.error("Brand Added Failed");
 			setSubmitting(false);
-		}
+		};
+
+		location.reload();
 	};
 
 	return (
@@ -96,6 +100,7 @@ const AddBrand = () => {
 
 const ViewBrand = () => {
 	const { brands, brandLoading } = useCollection();
+	const location=useLocation();
 	if (brandLoading) {
 		return <p>Loading...</p>;
 	};
@@ -120,7 +125,9 @@ const ViewBrand = () => {
 					// console.error(error);
 					toast.error("Deleted Failed!");
 				});
-		}
+		};
+
+		location.reload();
 	};
 
 	return (

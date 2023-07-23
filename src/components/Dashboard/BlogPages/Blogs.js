@@ -1,7 +1,7 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BsCheck2, BsEyeFill } from "react-icons/bs";
-import {  useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Table from "../../SharedPage/Table";
 import { baseURL } from "../../utilities/url";
@@ -9,29 +9,23 @@ import { useCollection } from "../../../actions/reducers";
 import SunEditor from "suneditor-react";
 import axios from "axios";
 
-
-
-
 const Blogs = () => {
 	const { isViewBlogs } = useCollection();
 	return <div>{isViewBlogs ? <AddBlogs /> : <ViewBlogs />}</div>;
 };
 
-
-
-
-
 const ViewBlogs = () => {
 	const { news, newsLoading } = useCollection();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	if (newsLoading) {
 		return <p>Loading....</p>;
-	};
-	
+	}
+
 	if (!newsLoading && news.length === 0) {
 		return <p className="text-center text-lg">No News Available</p>;
-	};
+	}
 
 	const allBlogs = [...news]?.reverse() || "";
 
@@ -56,6 +50,7 @@ const ViewBlogs = () => {
 					toast.error("Deleted Failed!");
 				});
 		}
+		location.reload();
 	};
 
 	// console.log(allBlogs)
@@ -119,12 +114,8 @@ const ViewBlogs = () => {
 	);
 };
 
-
-
-
-
-
 const AddBlogs = () => {
+	const location = useLocation();
 	const [newsTitle, setNewsTitle] = useState("");
 	const [newsCategory, setNewsCategory] = useState("");
 	const [newsImg, setNewsImg] = useState(null);
@@ -157,7 +148,9 @@ const AddBlogs = () => {
 			console.log(error);
 			toast.error("News Added Failed");
 			setSubmitting(false);
-		}
+		};
+
+		location.reload();
 	};
 
 	return (
@@ -241,7 +234,6 @@ const AddBlogs = () => {
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
 							{submitting ? "Submitting..." : "Submit"}
-							
 						</button>
 					</form>
 				</div>

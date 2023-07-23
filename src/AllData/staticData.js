@@ -39,6 +39,12 @@ export const sidebarMenu = [
     },
     {
         id: 6,
+        name: "Queries",
+        icon: <BsFileTextFill />,
+        path: "/admin-dashboard/message"
+    },
+    {
+        id: 6,
         name: "Team Members",
         icon: <RiProfileFill />,
         path: "/admin-dashboard/teams"

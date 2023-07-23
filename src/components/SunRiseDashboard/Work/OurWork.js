@@ -9,7 +9,7 @@ import Table from "../../SharedPage/Table";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { BsEyeFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OurWork = () => {
 	const { isViewWork } = useCollection();
@@ -24,6 +24,7 @@ const OurWork = () => {
 export default OurWork;
 
 const AddWork = () => {
+	const location = useLocation();
 	const [workName, setWorkName] = useState("");
 	const [workCategory, setWorkCategory] = useState("");
 	const [workImg, setWorkImg] = useState(null);
@@ -56,7 +57,9 @@ const AddWork = () => {
 			console.log(error);
 			toast.error("Work Added Failed");
 			setSubmitting(false);
-		}
+		};
+
+		location.reload();
 	};
 	
 
@@ -152,6 +155,7 @@ const AddWork = () => {
 const ViewWork = () => {
 	const { work, workLoading } = useCollection();
 	const navigate = useNavigate();
+	const location=useLocation();
 
 	if (workLoading) {
 		return <p>Loading...</p>;
@@ -185,7 +189,8 @@ const ViewWork = () => {
 					// console.error(error);
 					toast.error("Deleted Failed!");
 				});
-		}
+		};
+		location.reload();
 	};
 
 	const PRODUCTS_COLUMNS = () => {

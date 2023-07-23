@@ -43,3 +43,9 @@ export const fetchWork = async () => {
     const data = await res.json();
     return data?.data;
 };
+//Fetch Work
+export const fetchMsg = async () => {
+    const res = await fetch(`${baseURL}/contact/all`);
+    const data = await res.json();
+    return data?.data;
+};

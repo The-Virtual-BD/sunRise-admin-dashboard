@@ -6,7 +6,7 @@ import { baseURL } from "../../utilities/url";
 import { AiFillDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Faqs = () => {
@@ -96,6 +96,7 @@ const AddFaq = () => {
 const ViewFaqs = () => {
 	const { faqs, faqLoading } = useCollection();
 	const navigate = useNavigate();
+	const location=useLocation();
 
 	if (faqLoading) {
 		return <p>Loading...</p>;
@@ -114,7 +115,8 @@ const ViewFaqs = () => {
 			axios
 				.delete(`${baseURL}/faqs/${id}`)
 				.then((response) => {
-					console.log(`Deleted post with ID ${id}`);
+					// console.log(`Deleted post with ID ${id}`);
+					
 					toast.success("Deleted successfully!");
 				})
 				.catch((error) => {
@@ -122,6 +124,7 @@ const ViewFaqs = () => {
 					toast.error("Deleted Failed!");
 				});
 		}
+		location.reload();
 	};
 
 	//Handle Edit Btn
