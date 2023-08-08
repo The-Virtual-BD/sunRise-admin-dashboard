@@ -72,6 +72,10 @@ const WorkEdit = () => {
 		}
 	};
 
+    if (loading) {
+		return <p>Loading...</p>;
+	};
+
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
 			<div className="bg-white w-full lg:w-4/6 mx-auto p-5 mt-4 rounded-md">

@@ -138,8 +138,8 @@ const ViewFaqs = () => {
 				<div key={faqs._id} className="flex items-center gap-5 ">
 					<div className="collapse collapse-arrow bg-white mb-3">
 						<input type="checkbox" name="my-accordion-2" />
-						<div className="collapse-title font-medium ">{faqs?.faqQus}</div>
-						<div className="collapse-content">
+						<div className="collapse-title font-medium text-start">{faqs?.faqQus}</div>
+						<div className="collapse-content text-start">
 							<p>{faqs?.faqAns}</p>
 						</div>
 					</div>

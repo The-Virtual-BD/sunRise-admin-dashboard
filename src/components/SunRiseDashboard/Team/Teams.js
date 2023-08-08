@@ -9,6 +9,7 @@ import Table from "../../SharedPage/Table";
 import { BsEyeFill } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FiEdit } from "react-icons/fi";
 
 const Teams = () => {
 	const { isViewTeam } = useCollection();
@@ -165,7 +166,11 @@ const ViewTeam = () => {
 	const allTeam = [...team]?.reverse() || "";
 
 	const handleBlogView = (id) => {
-		navigate(`/admin-dashboard/teams/${id}`);
+		navigate(`/admin-dashboard/teams/view/${id}`);
+	};
+
+	const handleEditBtn = (id) => {
+		navigate(`/admin-dashboard/teams/edit/${id}`);
 	};
 
 	//Handle Delete Post
@@ -232,6 +237,12 @@ const ViewTeam = () => {
 							<button onClick={() => handleBlogView(_id)}>
 								<div className="w-8 h-8 rounded-md bg-[#00A388] text-white grid items-center justify-center">
 									<BsEyeFill className="text-lg " />
+								</div>
+							</button>
+							
+							<button onClick={() => handleEditBtn(_id)}>
+								<div className="w-8 h-8 rounded-md bg-primary  text-white grid items-center justify-center">
+									<FiEdit className="text-lg " />
 								</div>
 							</button>
 
