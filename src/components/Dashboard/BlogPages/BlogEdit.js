@@ -110,8 +110,6 @@ const BlogEdit = () => {
 							</div>
 						</div>
 
-						
-
 						<div className="w-full">
 							<SunEditor
 								setOptions={{
