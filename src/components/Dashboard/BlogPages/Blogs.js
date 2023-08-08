@@ -8,6 +8,7 @@ import { baseURL } from "../../utilities/url";
 import { useCollection } from "../../../actions/reducers";
 import SunEditor from "suneditor-react";
 import axios from "axios";
+import { FiEdit } from "react-icons/fi";
 
 const Blogs = () => {
 	const { isViewBlogs } = useCollection();
@@ -30,8 +31,11 @@ const ViewBlogs = () => {
 	const allBlogs = [...news]?.reverse() || "";
 
 	const handleBlogView = (id) => {
-		// console.log("clicked", id);
-		navigate(`/admin-dashboard/news/${id}`);
+		navigate(`/admin-dashboard/news/view/${id}`);
+	};
+
+	const handleEditBtn = (id) => {
+		navigate(`/admin-dashboard/news/edit/${id}`);
 	};
 
 	//Handle Delete Post
@@ -90,6 +94,11 @@ const ViewBlogs = () => {
 							<button onClick={() => handleBlogView(_id)}>
 								<div className="w-8 h-8 rounded-md bg-[#00A388] text-white grid items-center justify-center">
 									<BsEyeFill className="text-lg " />
+								</div>
+							</button>
+							<button onClick={() => handleEditBtn(_id)}>
+								<div className="w-8 h-8 rounded-md bg-primary  text-white grid items-center justify-center">
+									<FiEdit className="text-lg " />
 								</div>
 							</button>
 
@@ -188,6 +197,7 @@ const AddBlogs = () => {
 						<div className="form-control w-full  ">
 							<input
 								type="file"
+								accept=".jpg,.png,.jpeg,.svg"
 								onChange={(e) => setNewsImg(e.target.files[0])}
 								required
 								className="file-input  w-full bg-bgclr"

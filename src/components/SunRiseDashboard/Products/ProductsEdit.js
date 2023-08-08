@@ -7,42 +7,57 @@ import SunEditor from "suneditor-react";
 
 const ProductsEdit = () => {
 	const { id } = useParams();
-    const [sinPro, setSinPro] = useState({});
+	const [sinPro, setSinPro] = useState({});
+	const [loading, setLoading] = useState(true);
 
-    const [proNamE, setProName] = useState("");
+	const [proNamE, setProName] = useState("");
 	const [proCategorY, setProCategory] = useState("");
 	const [proImG, setProImg] = useState("");
 	const [proDesC, setProDesc] = useState("");
 
+	const [oldMemberImgURL, setOldMemberImgURL] = useState("");
+	const [submitting, setSubmitting] = useState(false);
 
-    //Update Value
+
+	useEffect(() => {
+		fetch(`${baseURL}/products/${id}`)
+			.then((res) => res.json())
+			.then((data) => {
+				setSinPro(data);
+				setProDesc(data.proDesc);
+				setLoading(false);
+			});
+	}, [id]);
+
+
+	//Update Value
 	useEffect(() => {
 		if (sinPro) {
 			setProName(sinPro.proName);
 			setProCategory(sinPro.proCategory);
-			setProImg(sinPro.proImg);
-			setProDesc(sinPro.proDesc);
+			setOldMemberImgURL(sinPro.proImg);
 		}
 	}, [sinPro]);
 
 
-    useEffect(() => {
-		fetch(`${baseURL}/products/${id}`)
-			.then((res) => res.json())
-			.then((data) => setSinPro(data));
-	}, [id]);
 
-
-	//Handle Product Add Form
+	//Handle News Edit Form
 	const handleProductUpdateForm = (e) => {
 		e.preventDefault();
+		setSubmitting(true);
 
 		try {
 			const productForm = new FormData();
 			productForm.append("proName", proNamE);
 			productForm.append("proCategory", proCategorY);
-			productForm.append("proImg", proImG);
 			productForm.append("proDesc", proDesC);
+
+			// Check if a new image is selected
+			if (proImG) {
+				productForm.append("proImg", proImG);
+			} else {
+				productForm.append("proImg", oldMemberImgURL);
+			}
 
 			const url = `${baseURL}/products/${id}`;
 			axios
@@ -51,16 +66,19 @@ const ProductsEdit = () => {
 					console.log(res);
 					toast.success("Products Updated Successfully");
 					e.target.reset();
+					setSubmitting(false);
 				})
 				.catch((error) => console.log(error));
 		} catch (error) {
 			console.log(error);
 			toast.error("Products Updated Failed");
+			setSubmitting(false);
 		}
 	};
 
-
-
+	if (loading) {
+		return <p>Loading...</p>;
+	};
 
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
@@ -77,7 +95,7 @@ const ProductsEdit = () => {
 								<input
 									type="text"
 									placeholder="Name"
-                                    value={proNamE}
+									value={proNamE}
 									onChange={(e) => setProName(e.target.value)}
 									required
 									className="input  w-full  bg-bgclr"
@@ -88,22 +106,12 @@ const ProductsEdit = () => {
 								<input
 									type="text"
 									placeholder="Category"
-                                    value={proCategorY}
+									value={proCategorY}
 									onChange={(e) => setProCategory(e.target.value)}
 									required
 									className="input  w-full  bg-bgclr"
 								/>
 							</div>
-						</div>
-
-						<div className="form-control w-full  ">
-							<input
-								type="file"
-								onChange={(e) => setProImg(e.target.files[0])}
-                                // value={proCategorY}
-								// required
-								className="file-input  w-full bg-bgclr"
-							/>
 						</div>
 
 						<div className="w-full">
@@ -123,8 +131,6 @@ const ProductsEdit = () => {
 										["indent", "outdent"],
 										["align", "horizontalRule", "list", "table"],
 										["link"],
-										["fullScreen", "showBlocks", "codeView"],
-										["preview", "print"],
 									],
 								}}
 								lang="en"
@@ -132,21 +138,41 @@ const ProductsEdit = () => {
 								height="100%"
 								placeholder="Enter Description..."
 								autoFocus={true}
-                                
 								onChange={(content) => {
 									setProDesc(content);
 								}}
-                                setContents={proDesC}
+								defaultValue={proDesC}
 								required
 								setDefaultStyle="font-family: 'Open Sans', sans-serif; font-size: 14px; text-align:start; min-height:200px; background:#ECF0F1"
 							/>
 						</div>
 
+						<div className="form-control w-full">
+							<input
+								type="file"
+								accept=".jpg,.png,.jpeg,.svg"
+								onChange={(e) => setProImg(e.target.files[0])}
+								className="file-input w-full bg-bgclr"
+							/>
+
+							{/* Show the old image */}
+							{oldMemberImgURL && (
+								<div className="w-60 min-h-40">
+									<img
+										src={`${baseURL}/${oldMemberImgURL}`}
+										alt="Old project"
+										className="w-full  mt-4"
+									/>
+								</div>
+							)}
+						</div>
+
 						<button
 							type="submit"
+							disabled={submitting}
 							className="px-10 py-2 bg-blue border border-blue hover:bg-white hover:border-blue hover:text-blue text-white rounded-lg "
 						>
-							Update
+							{submitting ? "Updating..." : "Update"}
 						</button>
 					</form>
 				</div>

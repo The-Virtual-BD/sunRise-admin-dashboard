@@ -14,7 +14,7 @@ export function GlobalFilter({ filter, setFilter }) {
                     type="text"
                     placeholder="Search"
                     value={filter || ""} onChange={(e) => setFilter(e.target.value)}
-                    className=" rounded-md outline-none py-2 p-1 bg-cardBg text-primary " />
+                    className=" rounded-md outline-none py-2 p-1 bg-cardBg text-primary bg-white" />
             </div>
         </>
     );
