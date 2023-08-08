@@ -166,12 +166,12 @@ const ViewWork = () => {
 	const sortWork = [...work].reverse();
 
 	const handleProductView = (id) => {
-		navigate(`/admin-dashboard/our-work/${id}`);
+		navigate(`/admin-dashboard/our-work/view/${id}`);
 	};
 
-	/* const handleEditBtn = (id) => {
-		navigate(`/admin-dashboard/products/edit/${id}`);
-	}; */
+	const handleEditBtn = (id) => {
+		navigate(`/admin-dashboard/our-work/edit/${id}`);
+	};
 
 	//Handle Delete Post
 	const handleDeleteProduct = (id) => {
@@ -230,11 +230,11 @@ const ViewWork = () => {
 								</div>
 							</button>
 
-							{/* <button onClick={() => handleEditBtn(_id)}>
+							<button onClick={() => handleEditBtn(_id)}>
 								<div className="w-8 h-8 rounded-md bg-primary  text-white grid items-center justify-center">
 									<FiEdit className="text-lg " />
 								</div>
-							</button> */}
+							</button>
 
 							<button onClick={() => handleDeleteProduct(_id)}>
 								<div className="w-8 h-8 rounded-md bg-[#FF0000] text-white grid items-center justify-center">

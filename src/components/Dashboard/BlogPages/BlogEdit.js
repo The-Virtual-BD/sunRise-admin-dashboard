@@ -80,7 +80,7 @@ const BlogEdit = () => {
 		<div className="bg-bgclr text-primary min-h-screen">
 			<div className="bg-white w-full lg:w-4/6 mx-auto p-5 mt-4 rounded-md">
 				<div>
-					<h3 className="px-3 text-2xl font-bold text-center">Add News</h3>
+					<h3 className="px-3 text-2xl font-bold text-center">Edit News</h3>
 
 					<form
 						onSubmit={handleNewsForm}
