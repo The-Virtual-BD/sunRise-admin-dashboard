@@ -57,11 +57,10 @@ const AddWork = () => {
 			console.log(error);
 			toast.error("Work Added Failed");
 			setSubmitting(false);
-		};
+		}
 
 		location.reload();
 	};
-	
 
 	return (
 		<div className="bg-bgclr text-primary min-h-screen">
@@ -155,15 +154,15 @@ const AddWork = () => {
 const ViewWork = () => {
 	const { work, workLoading } = useCollection();
 	const navigate = useNavigate();
-	const location=useLocation();
+	const location = useLocation();
 
 	if (workLoading) {
 		return <p>Loading...</p>;
-	};
-	
+	}
+
 	if (!workLoading && work.length === 0) {
 		return <p className="text-center text-lg">No Work Available</p>;
-	};
+	}
 	const sortWork = [...work].reverse();
 
 	const handleProductView = (id) => {
@@ -189,7 +188,7 @@ const ViewWork = () => {
 					// console.error(error);
 					toast.error("Deleted Failed!");
 				});
-		};
+		}
 		location.reload();
 	};
 
@@ -231,7 +230,7 @@ const ViewWork = () => {
 								</div>
 							</button>
 
-							{/* 	<button onClick={() => handleEditBtn(_id)}>
+							{/* <button onClick={() => handleEditBtn(_id)}>
 								<div className="w-8 h-8 rounded-md bg-primary  text-white grid items-center justify-center">
 									<FiEdit className="text-lg " />
 								</div>

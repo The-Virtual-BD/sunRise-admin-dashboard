@@ -26,6 +26,9 @@ import TeamDetails from "./components/SunRiseDashboard/Team/TeamDetails";
 import OurWorkDetails from "./components/SunRiseDashboard/Work/OurWorkDetails";
 import Message from "./components/SunRiseDashboard/msg/Message";
 import MessageDetails from "./components/SunRiseDashboard/msg/MessageDetails";
+import TeamEdit from "./components/SunRiseDashboard/Team/TeamEdit";
+import WorkEdit from "./components/SunRiseDashboard/Work/WorkEdit";
+import BlogEdit from "./components/Dashboard/BlogPages/BlogEdit";
 
 const queryClient = new QueryClient();
 
@@ -35,77 +38,41 @@ function App() {
 		<QueryClientProvider client={queryClient}>
 			<CollectionContext>
 				<Routes>
-					<Route
-						path="/"
-						element={
-							<RequireAuth>
-								{" "}
-								<AdminDashboard />{" "}
-							</RequireAuth>
-						}
-					/>
+					<Route path="/" element={<RequireAuth>{" "}<AdminDashboard />{" "}</RequireAuth>}/>
 
-					<Route
-						path="/admin-dashboard"
-						element={
-							<RequireAuth>
-								<AdminDashboard />
-							</RequireAuth>
-						}
-					>
-						<Route
-							index
-							path="/admin-dashboard/dashboard"
-							element={<Dashboard />}
-						/>
-
+					<Route path="/admin-dashboard" element={<RequireAuth><AdminDashboard /></RequireAuth>}>
+						
+					
+						<Route index path="/admin-dashboard/dashboard" element={<Dashboard />}/>
+							
 						<Route path="/admin-dashboard/news" element={<Blogs />}></Route>
-						<Route
-							path="/admin-dashboard/news/:id"
-							element={<BlogDetails />}
-						></Route>
+						<Route path="/admin-dashboard/news/view/:id" element={<BlogDetails />}></Route>
+						<Route path="/admin-dashboard/news/edit/:id" element={<BlogEdit />}></Route>
+						
 
-						<Route path="/admin-dashboard/faqs" element={<Faqs />}></Route>
-						<Route
-							path="/admin-dashboard/faqs/:id"
-							element={<FaqsEdit />}
-						></Route>
+						<Route path="/admin-dashboard/products" element={<Products />}></Route>
+						<Route path="/admin-dashboard/products/view/:id" element={<ProductDetails />}></Route>
+						<Route path="/admin-dashboard/products/edit/:id" element={<ProductsEdit />}></Route>
+							
 
-						<Route
-							path="/admin-dashboard/products"
-							element={<Products />}
-						></Route>
-						<Route
-							path="/admin-dashboard/products/edit/:id"
-							element={<ProductsEdit />}
-						></Route>
-						<Route
-							path="/admin-dashboard/products/view/:id"
-							element={<ProductDetails />}
-						></Route>
+						<Route path="/admin-dashboard/our-work" element={<OurWork />}></Route>
+						<Route path="/admin-dashboard/our-work/view/:id" element={<OurWorkDetails />}></Route>
+						<Route path="/admin-dashboard/our-work/edit/:id" element={<WorkEdit />}></Route>
 
-						<Route path="/admin-dashboard/brand" element={<Brands />}></Route>
-						<Route
-							path="/admin-dashboard/our-work"
-							element={<OurWork />}
-						></Route>
-						<Route
-							path="/admin-dashboard/our-work/:id"
-							element={<OurWorkDetails />}
-						></Route>
 
 						<Route path="/admin-dashboard/teams" element={<Teams />}></Route>
-						<Route
-							path="/admin-dashboard/teams/:id"
-							element={<TeamDetails />}
-						></Route>
+						<Route path="/admin-dashboard/teams/view/:id" element={<TeamDetails />}></Route>
+						<Route path="/admin-dashboard/teams/edit/:id" element={<TeamEdit />}></Route>
 
 
+						<Route path="/admin-dashboard/brand" element={<Brands />}></Route>
+
+						<Route path="/admin-dashboard/faqs" element={<Faqs />}></Route>
+						<Route path="/admin-dashboard/faqs/:id" element={<FaqsEdit />}></Route>
+							
 						<Route path="/admin-dashboard/message" element={<Message />}></Route>
-						<Route
-							path="/admin-dashboard/message/:id"
-							element={<MessageDetails />}
-						></Route>
+						<Route path="/admin-dashboard/message/:id" element={<MessageDetails />}></Route>
+							
 					</Route>
 
 					<Route path="/sign-in" element={<Login />}></Route>
