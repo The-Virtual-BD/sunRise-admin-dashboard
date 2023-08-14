@@ -5,16 +5,20 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDNHXAGTSgXPKviXXLX3rLD--MS5KGQDfs",
-  authDomain: "sunrise-com.firebaseapp.com",
-  projectId: "sunrise-com",
-  storageBucket: "sunrise-com.appspot.com",
-  messagingSenderId: "580824599310",
-  appId: "1:580824599310:web:df8810d230b473f92aa55f"
+	apiKey: "AIzaSyAUkLt3IAturL7tbJnHOS48Trs4pZ5rqmI",
+
+	authDomain: "sunrise-comu.firebaseapp.com",
+
+	projectId: "sunrise-comu",
+
+	storageBucket: "sunrise-comu.appspot.com",
+
+	messagingSenderId: "229903421413",
+
+	appId: "1:229903421413:web:89bc8b9b107a26cdf8a90c",
 };
-
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
